@@ -1,0 +1,21 @@
+###
+POST http://localhost:3001/api/users
+Content-Type: application/json
+
+{
+  "email": "user@email.com",
+  "name": "Test User",
+  "role": "client"
+}
+
+###
+POST http://localhost:3001/api/users
+Content-Type: application/json
+
+{
+  "email": "jane@email.com",
+  "name": "Jane Doe",
+  "role": "employee"
+}
+
+
