@@ -4,4 +4,7 @@ GET http://localhost:3001/api/users
 ###
 GET http://localhost:3001/api/users/80904efc-67d3-4ac4-95d3-3cd5965c5fcc
 
+###
+GET http://localhost:3001/api/users/80904efc-67d3-4ac4-95d3-3cd5965c5fcc/appointments
+
 

@@ -14,10 +14,27 @@ router.get('/:id', async (req, res) => {
       {
         model: Appointment,
         as: 'appointments', // The alias you defined in the association
+        include: {
+          model: User,
+          as: 'employee',
+        },
       },
     ],
   });
   res.json(user);
+});
+
+router.get('/:id/appointments', async (req, res) => {
+  const user = await User.findByPk(req.params.id);
+  const clientAppointments = await user.getAppointments({
+    include: [
+      {
+        model: User,
+        as: 'employee',
+      },
+    ],
+  });
+  res.json(clientAppointments);
 });
 
 router.post('/', async (req, res) => {
