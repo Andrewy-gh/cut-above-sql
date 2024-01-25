@@ -1,11 +1,30 @@
 import { Router } from 'express';
 import { Appointment, Schedule } from '../models/index.js';
+import { validateNewRequest } from '../util/validation.js';
 
 const router = Router();
 
 router.get('/', async (req, res) => {
   const appointments = await Appointment.findAll();
   res.json(appointments);
+});
+
+// req.body from client:
+// {
+//   date: '2024-02-02',
+//   start: '17:30',
+//   end: '18:00',
+//   service: 'Haircut',
+//   employee: '64a60e878bdf8a4ac0f98209'
+// }
+router.post('/test', async (req, res) => {
+  try {
+    const isValidReq = await validateNewRequest(req.body);
+    res.json(isValidReq);
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ error });
+  }
 });
 
 router.post('/', async (req, res) => {
