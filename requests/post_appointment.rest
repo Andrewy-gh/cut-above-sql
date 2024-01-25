@@ -1,4 +1,3 @@
-
 ###
 POST http://localhost:3001/api/appointments
 Content-Type: application/json
@@ -7,8 +6,6 @@ Content-Type: application/json
   "date": "2024-01-24", 
   "startTime": "17:00", 
   "endTime": "17:30",
-  "clientId": "80904efc-67d3-4ac4-95d3-3cd5965c5fcc",
-  "employeeId": "a50b56e6-713a-4c0e-9996-439be75dc5c8"
+  "clientId": "96b0cfd3-8c5f-4bb7-8946-c550e1e36f99",
+  "employeeId": "6383181b-e1e5-4931-a43f-090eccd9f7e7"
 }
-
-

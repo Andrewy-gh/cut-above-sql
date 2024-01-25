@@ -1,5 +1,6 @@
 import User from './user.js';
 import Appointment from './appointment.js';
+import Schedule from './schedule.js';
 
 User.hasMany(Appointment, {
   foreignKey: 'clientId',
@@ -12,6 +13,8 @@ User.hasMany(Appointment, {
 
 Appointment.belongsTo(User, { foreignKey: 'clientId', as: 'client' });
 Appointment.belongsTo(User, { foreignKey: 'employeeId', as: 'employee' });
+Schedule.hasMany(Appointment, { foreignKey: 'scheduleId', as: 'appointments' });
+Appointment.belongsTo(Schedule, { foreignKey: 'scheduleId', as: 'schedule' });
 
 // // Many-to-many relatonship with junction table
 // User.belongsToMany(User, {
@@ -27,5 +30,6 @@ Appointment.belongsTo(User, { foreignKey: 'employeeId', as: 'employee' });
 
 User.sync({ alter: true });
 Appointment.sync({ alter: true });
+Schedule.sync({ alter: true });
 
-export { User, Appointment };
+export { User, Appointment, Schedule };
