@@ -10,12 +10,51 @@ Content-Type: application/json
   "employeeId": "6383181b-e1e5-4931-a43f-090eccd9f7e7"
 }
 
-###
+### This a test for validating requests
 POST http://localhost:3001/api/appointments/test
 Content-Type: application/json
 
 {
   "date": "2024-01-24", 
+  "startTime": "17:00", 
+  "endTime": "17:30",
+  "clientId": "96b0cfd3-8c5f-4bb7-8946-c550e1e36f99",
+  "employeeId": "6383181b-e1e5-4931-a43f-090eccd9f7e7",
+  "service": "Haircut"
+}
+
+### New appointment test
+POST http://localhost:3001/api/appointments
+Content-Type: application/json
+
+{
+  "date": "2024-01-26", 
+  "startTime": "17:00", 
+  "endTime": "17:30",
+  "clientId": "96b0cfd3-8c5f-4bb7-8946-c550e1e36f99",
+  "employeeId": "6383181b-e1e5-4931-a43f-090eccd9f7e7",
+  "service": "Haircut"
+}
+
+### New appointment test should not pass validation
+POST http://localhost:3001/api/appointments
+Content-Type: application/json
+
+{
+  "date": "2024-01-26", 
+  "startTime": "not_a_valid_time", 
+  "endTime": "17:30",
+  "clientId": "96b0cfd3-8c5f-4bb7-8946-c550e1e36f99",
+  "employeeId": "6383181b-e1e5-4931-a43f-090eccd9f7e7",
+  "service": "Haircut"
+}
+
+### New appointment test with already booked timeslot
+POST http://localhost:3001/api/appointments
+Content-Type: application/json
+
+{
+  "date": "2024-01-26", 
   "startTime": "17:00", 
   "endTime": "17:30",
   "clientId": "96b0cfd3-8c5f-4bb7-8946-c550e1e36f99",

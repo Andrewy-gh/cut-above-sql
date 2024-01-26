@@ -1,4 +1,4 @@
-import { findById } from '../services.js/userService.js';
+import { findById } from '../services/userService.js';
 
 // req.body from client:
 // {
@@ -66,7 +66,8 @@ const parseUser = async (userId, role) => {
   if (!user || user?.role !== role) {
     throw new Error('Incorrect or missing user id');
   }
-  return user;
+  // return the user id just to book instead of the database object
+  return user.id;
 };
 
 export const validateNewRequest = async (object) => {

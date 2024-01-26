@@ -1,0 +1,2 @@
+###
+DELETE http://localhost:3001/api/appointments/c1d92433-3359-4296-90a2-dd4a0c8327bc

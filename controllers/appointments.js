@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import { Appointment, Schedule } from '../models/index.js';
+import { checkScheduleAvailability } from '../services/scheduleService.js';
 import { validateNewRequest } from '../util/validation.js';
 
 const router = Router();
@@ -29,15 +30,27 @@ router.post('/test', async (req, res) => {
 
 router.post('/', async (req, res) => {
   try {
-    const [schedule] = await Schedule.findOrCreate({
-      where: { date: req.body.date },
-    });
+    // isValidReq
+    const isValidReq = await validateNewRequest(req.body);
+    if (!isValidReq) {
+      return res.status(400).end();
+    }
+
+    // check availability
+    const availbleScheduleId = await checkScheduleAvailability(isValidReq);
+    if (!availbleScheduleId) {
+      return res.status(410).end();
+    }
     const appointment = await Appointment.create({
       ...req.body,
-      scheduleId: schedule.id,
+      scheduleId: availbleScheduleId,
     });
     res.json(appointment);
+    // res.json({ success: true });
   } catch (error) {
+    console.log('====================================');
+    console.log(error);
+    console.log('====================================');
     return res.status(400).json({ error });
   }
 });
