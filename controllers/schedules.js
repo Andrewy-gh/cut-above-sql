@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import { Schedule, Appointment, User } from '../models/index.js';
+import { checkAvailability } from '../util/dateTime.js';
 
 const router = Router();
 
@@ -37,6 +38,21 @@ router.get('/', async (req, res) => {
     ],
   });
   res.json(schedules);
+});
+
+router.get('/:id/test', async (req, res) => {
+  const newAppt = {
+    date: '2024-01-25',
+    startTime: '17:00:00',
+    endTime: '17:30:00',
+    clientId: '96b0cfd3-8c5f-4bb7-8946-c550e1e36f99',
+    employeeId: '6383181b-e1e5-4931-a43f-090eccd9f7e7',
+  };
+  const schedule = await Schedule.findByPk(req.params.id);
+  const appointments = await schedule.getAppointments();
+
+  const isAvailable = checkAvailability(appointments, newAppt);
+  res.json(isAvailable);
 });
 
 router.delete('/:id', async (req, res) => {
