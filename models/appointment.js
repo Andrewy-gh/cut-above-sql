@@ -23,6 +23,15 @@ Appointment.init(
       type: DataTypes.TIME,
       allowNull: false,
     },
+    service: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    status: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      defaultValue: 'scheduled',
+    },
   },
   { sequelize, underscored: true, modelName: 'appointment' }
 );

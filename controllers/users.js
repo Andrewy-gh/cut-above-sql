@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import { User, Appointment } from '../models/index.js';
+import { getAppointmentsByRole } from '../services/userService.js';
 
 const router = Router();
 
@@ -13,10 +14,10 @@ router.get('/:id', async (req, res) => {
     include: [
       {
         model: Appointment,
-        as: 'appointments', // The alias you defined in the association
+        as: 'employeeAppointments', // The alias you defined in the association
         include: {
           model: User,
-          as: 'employee',
+          as: 'client',
         },
       },
     ],
@@ -25,16 +26,15 @@ router.get('/:id', async (req, res) => {
 });
 
 router.get('/:id/appointments', async (req, res) => {
-  const user = await User.findByPk(req.params.id);
-  const clientAppointments = await user.getAppointments({
-    include: [
-      {
-        model: User,
-        as: 'employee',
-      },
-    ],
-  });
-  res.json(clientAppointments);
+  try {
+    const user = await User.findByPk(req.params.id);
+    const appointments = await getAppointmentsByRole(user);
+    res.json(appointments);
+  } catch (error) {
+    console.log('====================================');
+    console.log(error);
+    console.log('====================================');
+  }
 });
 
 router.post('/', async (req, res) => {

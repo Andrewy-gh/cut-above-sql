@@ -2,9 +2,12 @@
 GET http://localhost:3001/api/users
 
 ###
-GET http://localhost:3001/api/users/80904efc-67d3-4ac4-95d3-3cd5965c5fcc
+GET http://localhost:3001/api/users/b8e97212-71a5-4206-a674-0781e3a39c58
 
-###
-GET http://localhost:3001/api/users/80904efc-67d3-4ac4-95d3-3cd5965c5fcc/appointments
+### user testing
+GET http://localhost:3001/api/users/6ac161c5-b033-412e-8d35-06cd46dbd59a/appointments
+
+### employee testing
+GET http://localhost:3001/api/users/b8e97212-71a5-4206-a674-0781e3a39c58/appointments
 
 
