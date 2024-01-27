@@ -9,8 +9,10 @@ import {
 const router = Router();
 
 router.route('/').get(getAllUsers).post(createNewUser);
+
+router.route('/:id/appointments').get(getAppointmentsById);
+
 // test route
 router.route('/:id').get(getAppointments);
-router.route('/:id/appointments').get(getAppointmentsById);
 
 export default router;

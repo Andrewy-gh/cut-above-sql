@@ -1,21 +1,18 @@
-import { Router } from 'express';
-import { Appointment, Schedule } from '../models/index.js';
+import { Appointment } from '../models/index.js';
 import { checkScheduleAvailability } from '../services/scheduleService.js';
 import { validateNewRequest } from '../utils/validation.js';
 import { updateAppointment } from '../services/appointmentService.js';
 
-const router = Router();
-
 /**
- * @description update one user by _id
- * @route /api/users/:id
- * @method PUT
- * @returns {object}, with fields changed and success or failure message
+ * @description retrieve all appointments
+ * @route /api/appointments
+ * @method GET
+ * @returns {Appointment[]}, array of Appointment objects
  */
-router.get('/', async (req, res) => {
+export const getAllAppointments = async (req, res) => {
   const appointments = await Appointment.findAll();
   res.json(appointments);
-});
+};
 
 // req.body from client:
 // {
@@ -25,7 +22,14 @@ router.get('/', async (req, res) => {
 //   service: 'Haircut',
 //   employee: '64a60e878bdf8a4ac0f98209'
 // }
-router.post('/test', async (req, res) => {
+
+/**
+ * @description test route custom request validator
+ * @route /api/appointments/test
+ * @method POST
+ * @returns {Appointment | Error}, returns a valid Appointment object or Error
+ */
+export const testRequestValidation = async (req, res) => {
   try {
     const isValidReq = await validateNewRequest(req.body);
     res.json(isValidReq);
@@ -33,9 +37,15 @@ router.post('/test', async (req, res) => {
     console.log(error);
     return res.status(500).json({ error });
   }
-});
+};
 
-router.post('/', async (req, res) => {
+/**
+ * @description book a new appointment
+ * @route /api/appointments
+ * @method POST
+ * @returns {Appointment | Error}, returns a valid Appointment object or Error
+ */
+export const bookAppointment = async (req, res) => {
   try {
     const isValidReq = await validateNewRequest(req.body);
     if (!isValidReq) {
@@ -56,9 +66,15 @@ router.post('/', async (req, res) => {
     console.log('====================================');
     return res.status(400).json({ error });
   }
-});
+};
 
-router.put('/:id', async (req, res) => {
+/**
+ * @description modify an appointment
+ * @route /api/appointments/:id
+ * @method PUT
+ * @returns {Appointment | Error}, returns a valid Appointment object or Error
+ */
+export const modifyAppointment = async (req, res) => {
   try {
     const isValidReq = await validateNewRequest(req.body);
     if (!isValidReq) {
@@ -75,7 +91,8 @@ router.put('/:id', async (req, res) => {
       .status(500)
       .json({ error: `Error updating appointment: ${error}` });
   }
-});
+};
+
 // router.put('/:id', async (req, res) => {
 //   try {
 //     // const isValidReq = await validateNewRequest(req.body);
@@ -108,7 +125,13 @@ router.put('/:id', async (req, res) => {
 //   }
 // });
 
-router.put('/:id/test', async (req, res) => {
+/**
+ * @description function to test modifying an appointment
+ * @route /api/appointments/:id/test
+ * @method PUT
+ * @returns {Appointment}, returns an Appointment object with updated details
+ */
+export const testAppointmentUpdate = async (req, res) => {
   const newAppt = {
     date: '2024-01-28',
     startTime: '14:00:00',
@@ -120,12 +143,16 @@ router.put('/:id/test', async (req, res) => {
   appointment.set(newAppt);
   await appointment.save();
   res.json(appointment);
-});
+};
 
-router.delete('/:id', async (req, res) => {
+/**
+ * @description delete an Appointment by id
+ * @route /api/appointments/:id
+ * @method DELETE
+ * @returns {Response}, response with code 200 No Content
+ */
+export const deleteAppointmentById = async (req, res) => {
   const appointment = await Appointment.findByPk(req.params.id);
   await appointment.destroy();
   res.status(200).end();
-});
-
-export default router;
+};

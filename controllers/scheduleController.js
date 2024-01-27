@@ -1,10 +1,13 @@
-import { Router } from 'express';
 import { Schedule, Appointment, User } from '../models/index.js';
 import { checkAvailability } from '../utils/dateTime.js';
 
-const router = Router();
-
-router.get('/', async (req, res) => {
+/**
+ * @description retrieve all schedules
+ * @route /api/schedules
+ * @method GET
+ * @returns {Schedule[]}, array of Schedule objects
+ */
+export const getAllSchedules = async (req, res) => {
   const schedules = await Schedule.findAll({
     attributes: { exclude: ['createdAt', 'updatedAt'] },
     include: [
@@ -38,9 +41,15 @@ router.get('/', async (req, res) => {
     ],
   });
   res.json(schedules);
-});
+};
 
-router.get('/:id/test', async (req, res) => {
+/**
+ * @description function to test schedule availability
+ * @route /api/schedules/:id/test
+ * @method GET
+ * @returns {Boolean},
+ */
+export const checkScheduleAvailability = async (req, res) => {
   const newAppt = {
     date: '2024-01-25',
     startTime: '17:00:00',
@@ -53,12 +62,16 @@ router.get('/:id/test', async (req, res) => {
 
   const isAvailable = checkAvailability(appointments, newAppt);
   res.json(isAvailable);
-});
+};
 
-router.delete('/:id', async (req, res) => {
+/**
+ * @description function to test schedule availability
+ * @route /api/schedules/:id
+ * @method DELETE
+ * @returns {Boolean},
+ */
+export const deleteScheduleById = async (req, res) => {
   const schedule = await Schedule.findByPk(req.params.id);
   await schedule.destroy();
   res.status(200).end();
-});
-
-export default router;
+};
