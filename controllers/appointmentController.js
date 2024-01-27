@@ -1,7 +1,7 @@
 import { Appointment } from '../models/index.js';
 import { checkScheduleAvailability } from '../services/scheduleService.js';
 import { validateNewRequest } from '../utils/validation.js';
-import { updateAppointment } from '../services/appointmentService.js';
+import { createNew, update } from '../services/appointmentService.js';
 
 /**
  * @description retrieve all appointments
@@ -46,26 +46,8 @@ export const testRequestValidation = async (req, res) => {
  * @returns {Appointment | Error}, returns a valid Appointment object or Error
  */
 export const bookAppointment = async (req, res) => {
-  try {
-    const isValidReq = await validateNewRequest(req.body);
-    if (!isValidReq) {
-      return res.status(400).end();
-    }
-    const availbleScheduleId = await checkScheduleAvailability(isValidReq);
-    if (!availbleScheduleId) {
-      return res.status(410).end();
-    }
-    const appointment = await Appointment.create({
-      ...req.body,
-      scheduleId: availbleScheduleId,
-    });
-    res.json(appointment);
-  } catch (error) {
-    console.log('====================================');
-    console.log(error);
-    console.log('====================================');
-    return res.status(400).json({ error });
-  }
+  const appointment = await createNew(req.body);
+  res.json(appointment);
 };
 
 /**
@@ -80,7 +62,7 @@ export const modifyAppointment = async (req, res) => {
     if (!isValidReq) {
       return res.status(400).end();
     }
-    const updatedAppointment = await updateAppointment({
+    const updatedAppointment = await update({
       ...isValidReq,
       id: req.params.id,
     });

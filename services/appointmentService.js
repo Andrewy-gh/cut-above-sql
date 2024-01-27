@@ -2,7 +2,16 @@ import { Appointment } from '../models/index.js';
 import { checkScheduleAvailability } from './scheduleService.js';
 import ApiError from '../utils/ApiError.js';
 
-export const updateAppointment = async (newAppt) => {
+export const createNew = async (newAppt) => {
+  const availbleScheduleId = await checkScheduleAvailability(newAppt);
+  const appointment = await Appointment.create({
+    ...newAppt,
+    scheduleId: availbleScheduleId,
+  });
+  return appointment;
+};
+
+export const update = async (newAppt) => {
   const appointment = await Appointment.findByPk(newAppt.id);
   if (!appointment) {
     throw new ApiError(404, 'appointment not found');

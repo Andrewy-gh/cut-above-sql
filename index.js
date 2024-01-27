@@ -1,4 +1,5 @@
 import express from 'express';
+import 'express-async-errors';
 import { PORT } from './utils/config.js';
 import { connectToDatabase } from './utils/db.js';
 import router from './routes/index.js';

@@ -7,13 +7,15 @@ import {
   testAppointmentUpdate,
   deleteAppointmentById,
 } from '../controllers/appointmentController.js';
+import validateRequest from '../middlewares/validateRequest.js';
+import { schema } from '../schemas/appointmentSchemas.js';
 
 const router = Router();
 
 router
   .route('/')
   .get(getAllAppointments)
-  .post(bookAppointment)
+  .post(validateRequest(schema), bookAppointment)
   .delete(deleteAppointmentById);
 
 router.route('/:id').get(modifyAppointment);

@@ -19,8 +19,16 @@ router.route('/:id/appointments').get(getAppointmentsById);
 router.route('/:id').get(getAppointments);
 
 const schema = Joi.object({
-  username: Joi.string().required(),
-  email: Joi.string().email().required(),
+  date: Joi.string().isoDate().required(),
+  startTime: Joi.string()
+    .regex(/^\d{2}:\d{2}$/)
+    .required(),
+  endTime: Joi.string()
+    .regex(/^\d{2}:\d{2}$/)
+    .required(),
+  clientId: Joi.string().guid().required(),
+  employeeId: Joi.string().guid().required(),
+  service: Joi.string().required(),
 });
 router.route('/test').post(validateRequest(schema), testUserSchema);
 
