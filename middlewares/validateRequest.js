@@ -1,6 +1,6 @@
 import ApiError from '../utils/ApiError.js';
 
-export const validateRequest = (schema) => {
+const validateRequest = (schema) => {
   return (req, res, next) => {
     const result = schema.validate(req.body);
     if (result.error) {
@@ -13,3 +13,5 @@ export const validateRequest = (schema) => {
     next();
   };
 };
+
+export default validateRequest;

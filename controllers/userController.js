@@ -65,3 +65,19 @@ export const createNewUser = async (req, res) => {
     return res.status(400).json({ error });
   }
 };
+
+/**
+ * @description test user schema validation
+ * @route /api/users/test
+ * @method POST
+ * @returns {Response}, newly created user
+ */
+export const testUserSchema = async (req, res) => {
+  try {
+    const body = req.body;
+    console.log(`Creating new user for: ${body.username},  ${body.email}`);
+    res.json({ message: 'Thanks for registering!' });
+  } catch (error) {
+    return res.status(400).json({ error });
+  }
+};

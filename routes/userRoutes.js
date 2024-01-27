@@ -4,7 +4,10 @@ import {
   getAppointments,
   getAppointmentsById,
   createNewUser,
-} from './controllers/userController.js';
+  testUserSchema,
+} from '../controllers/userController.js';
+import validateRequest from '../middlewares/validateRequest.js';
+import Joi from 'joi';
 
 const router = Router();
 
@@ -14,5 +17,11 @@ router.route('/:id/appointments').get(getAppointmentsById);
 
 // test route
 router.route('/:id').get(getAppointments);
+
+const schema = Joi.object({
+  username: Joi.string().required(),
+  email: Joi.string().email().required(),
+});
+router.route('/test').post(validateRequest(schema), testUserSchema);
 
 export default router;

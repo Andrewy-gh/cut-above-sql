@@ -1,12 +1,8 @@
-class ApiError {
+class ApiError extends Error {
   constructor(statusCode, message) {
-    Error.call(this);
-    Error.captureStackTrace(this);
+    super(message); // Call the superclass (Error) constructor
     this.statusCode = statusCode;
-    this.message = message;
   }
 }
-
-ApiError.prototype = Object.create(Error.prototype);
 
 export default ApiError;

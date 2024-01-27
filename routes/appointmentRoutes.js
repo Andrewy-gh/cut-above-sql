@@ -6,7 +6,7 @@ import {
   modifyAppointment,
   testAppointmentUpdate,
   deleteAppointmentById,
-} from './controllers/appointmentController.js';
+} from '../controllers/appointmentController.js';
 
 const router = Router();
 

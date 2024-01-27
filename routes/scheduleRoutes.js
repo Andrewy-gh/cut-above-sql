@@ -3,7 +3,7 @@ import {
   getAllSchedules,
   checkScheduleAvailability,
   deleteScheduleById,
-} from './controllers/schedulesController.js';
+} from '../controllers/scheduleController.js';
 
 const router = Router();
 
