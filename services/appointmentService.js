@@ -1,6 +1,6 @@
 import { Appointment } from '../models/index.js';
 import { checkScheduleAvailability } from './scheduleService.js';
-import ApiError from '../util/ApiError.js';
+import ApiError from '../utils/ApiError.js';
 
 export const updateAppointment = async (newAppt) => {
   const appointment = await Appointment.findByPk(newAppt.id);

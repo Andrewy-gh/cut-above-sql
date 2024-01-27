@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { Schedule, Appointment, User } from '../models/index.js';
-import { checkAvailability } from '../util/dateTime.js';
+import { checkAvailability } from '../utils/dateTime.js';
 
 const router = Router();
 

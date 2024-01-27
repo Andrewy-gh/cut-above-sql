@@ -1,11 +1,17 @@
 import { Router } from 'express';
 import { Appointment, Schedule } from '../models/index.js';
 import { checkScheduleAvailability } from '../services/scheduleService.js';
-import { validateNewRequest } from '../util/validation.js';
+import { validateNewRequest } from '../utils/validation.js';
 import { updateAppointment } from '../services/appointmentService.js';
 
 const router = Router();
 
+/**
+ * @description update one user by _id
+ * @route /api/users/:id
+ * @method PUT
+ * @returns {object}, with fields changed and success or failure message
+ */
 router.get('/', async (req, res) => {
   const appointments = await Appointment.findAll();
   res.json(appointments);

@@ -1,5 +1,5 @@
 import { Schedule } from '../models/index.js';
-import { checkAvailability } from '../util/dateTime.js';
+import { checkAvailability } from '../utils/dateTime.js';
 
 export const checkScheduleAvailability = async (newAppt) => {
   // current schedule's appointments
