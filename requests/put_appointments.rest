@@ -9,12 +9,12 @@ PUT http://localhost:3001/api/appointments/1f3c27a2-9f8a-46e6-aa51-46ef2dc10257
 Content-Type: application/json
 
 {
-  "date": "2024-01-27",
-  "startTime": "14:00",
-  "endTime": "14:45",
-  "service": "Cut and Shave Package",
+  "date": "2024-01-28",
+  "startTime": "10:00",
+  "endTime": "11:00",
+  "service": "The Full Package",
   "clientId": "6ac161c5-b033-412e-8d35-06cd46dbd59a",
-  "employeeId": "b8e97212-71a5-4206-a674-0781e3a39c58"
+  "employeeId": "dc0135fb-4866-4a11-9b2e-63bfdb6a48ea"
 }
 
 ### Test route
