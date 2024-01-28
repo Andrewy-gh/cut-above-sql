@@ -1,10 +1,11 @@
 import ApiError from '../utils/ApiError.js';
 import { isCelebrateError } from 'celebrate';
+import logger from '../utils/logger.js';
 
 const errorHandler = async (err, req, res, next) => {
-  console.log('====================================');
-  console.log('ERROR HANDLER: ', err);
-  console.log('====================================');
+  logger.error('====================================');
+  logger.error('ERROR HANDLER: ', err);
+  logger.error('====================================');
   if (isCelebrateError(err)) {
     // how to extract Celebrate Error details: https://stackoverflow.com/a/56865784
     const segments = ['body', 'params'];

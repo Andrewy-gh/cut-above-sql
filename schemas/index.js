@@ -2,6 +2,7 @@ import Joi from 'joi';
 
 export const bodySchema = Joi.object({
   date: Joi.string().isoDate().required(),
+  // ! TODO: add custom validator to make sure endTime > startTime
   startTime: Joi.string()
     .regex(/^\d{2}:\d{2}$/)
     .required(),

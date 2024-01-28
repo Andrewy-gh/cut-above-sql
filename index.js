@@ -6,6 +6,7 @@ import { PORT } from './utils/config.js';
 import { connectToDatabase } from './utils/db.js';
 import router from './routes/index.js';
 import errorHandler from './middlewares/errorHandler.js';
+import logger from './utils/logger/index.js';
 
 const app = express();
 
@@ -21,7 +22,7 @@ app.use(errorHandler);
 const start = async () => {
   await connectToDatabase();
   app.listen(PORT, () => {
-    console.log(`Server running on ${PORT}`);
+    logger.info(`Server running on ${PORT}`);
   });
 };
 
