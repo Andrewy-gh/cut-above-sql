@@ -18,6 +18,7 @@ export const update = async (newAppt) => {
   }
   if (newAppt.date && newAppt.date !== appointment.date) {
     const availbleScheduleId = await checkScheduleAvailability(newAppt);
+    // !TODO: add sequelize transaction
     const schedule = await appointment.getSchedule();
     await schedule.removeAppointment(appointment);
     appointment.set({

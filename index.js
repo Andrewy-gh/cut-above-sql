@@ -1,18 +1,23 @@
 import express from 'express';
+import helmet from 'helmet';
+import bodyParser from 'body-parser';
 import 'express-async-errors';
 import { PORT } from './utils/config.js';
 import { connectToDatabase } from './utils/db.js';
 import router from './routes/index.js';
 import errorHandler from './middlewares/errorHandler.js';
+import { errors } from 'celebrate';
 
 const app = express();
 
-app.use(express.json());
+app.use(helmet());
+app.use(bodyParser.json());
 
 // routes
 app.use('/', router);
 
 // error handler middleware
+// app.use(errors());
 app.use(errorHandler);
 
 const start = async () => {

@@ -1,4 +1,5 @@
 import { User } from '../models/index.js';
+import { getAppointmentsByRole } from '../services/userService.js';
 
 /**
  * @description retrieves all Users
@@ -40,15 +41,9 @@ export const getAppointments = async (req, res) => {
  * @returns {Appointment[]}, array of Appointment objects
  */
 export const getAppointmentsById = async (req, res) => {
-  try {
-    const user = await User.findByPk(req.params.id);
-    const appointments = await getAppointmentsByRole(user);
-    res.json(appointments);
-  } catch (error) {
-    console.log('====================================');
-    console.log(error);
-    console.log('====================================');
-  }
+  const user = await User.findByPk(req.params.id);
+  const appointments = await getAppointmentsByRole(user);
+  res.json(appointments);
 };
 
 /**
@@ -61,22 +56,6 @@ export const createNewUser = async (req, res) => {
   try {
     const user = await User.create(req.body);
     res.json(user);
-  } catch (error) {
-    return res.status(400).json({ error });
-  }
-};
-
-/**
- * @description test user schema validation
- * @route /api/users/test
- * @method POST
- * @returns {Response}, newly created user
- */
-export const testUserSchema = async (req, res) => {
-  try {
-    const body = req.body;
-    console.log(`Creating new user for: ${body.username},  ${body.email}`);
-    res.json({ message: 'Thanks for registering!' });
   } catch (error) {
     return res.status(400).json({ error });
   }

@@ -57,22 +57,11 @@ export const bookAppointment = async (req, res) => {
  * @returns {Appointment | Error}, returns a valid Appointment object or Error
  */
 export const modifyAppointment = async (req, res) => {
-  try {
-    const isValidReq = await validateNewRequest(req.body);
-    if (!isValidReq) {
-      return res.status(400).end();
-    }
-    const updatedAppointment = await update({
-      ...isValidReq,
-      id: req.params.id,
-    });
-    res.json(updatedAppointment);
-  } catch (error) {
-    console.log('error: ', error);
-    return res
-      .status(500)
-      .json({ error: `Error updating appointment: ${error}` });
-  }
+  const updatedAppointment = await update({
+    ...req.body,
+    id: req.params.id,
+  });
+  res.json(updatedAppointment);
 };
 
 // router.put('/:id', async (req, res) => {

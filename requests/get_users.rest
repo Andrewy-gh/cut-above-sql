@@ -1,11 +1,14 @@
 ###
 GET http://localhost:3001/api/users
 
-###
-GET http://localhost:3001/api/users/b8e97212-71a5-4206-a674-0781e3a39c58
+### hard coded to role currently DO NOT USE
+GET http://localhost:3001/api/users/6ac161c5-b033-412e-8d35-06cd46dbd59a
 
 ### user testing
 GET http://localhost:3001/api/users/6ac161c5-b033-412e-8d35-06cd46dbd59a/appointments
+
+### validation check user testing
+GET http://localhost:3001/api/users/fake_id/appointments
 
 ### employee testing
 GET http://localhost:3001/api/users/b8e97212-71a5-4206-a674-0781e3a39c58/appointments

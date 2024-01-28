@@ -1,6 +1,6 @@
 import Joi from 'joi';
 
-export const schema = Joi.object({
+export const bodySchema = Joi.object({
   date: Joi.string().isoDate().required(),
   startTime: Joi.string()
     .regex(/^\d{2}:\d{2}$/)
@@ -11,4 +11,8 @@ export const schema = Joi.object({
   clientId: Joi.string().guid().required(),
   employeeId: Joi.string().guid().required(),
   service: Joi.string().required(),
+});
+
+export const paramsSchema = Joi.object({
+  id: Joi.string().guid().required(),
 });

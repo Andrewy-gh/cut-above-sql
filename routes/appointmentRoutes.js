@@ -7,18 +7,34 @@ import {
   testAppointmentUpdate,
   deleteAppointmentById,
 } from '../controllers/appointmentController.js';
-import validateRequest from '../middlewares/validateRequest.js';
-import { schema } from '../schemas/appointmentSchemas.js';
+import { bodySchema, paramsSchema } from '../schemas/index.js';
+import { celebrate, Joi, Segments } from 'celebrate';
 
 const router = Router();
 
 router
   .route('/')
   .get(getAllAppointments)
-  .post(validateRequest(schema), bookAppointment)
+  .post(
+    celebrate({
+      [Segments.BODY]: bodySchema,
+    }),
+    bookAppointment
+  )
   .delete(deleteAppointmentById);
 
-router.route('/:id').get(modifyAppointment);
+router.route('/:id').put(
+  celebrate(
+    {
+      [Segments.BODY]: bodySchema,
+      [Segments.PARAMS]: paramsSchema,
+    },
+    { abortEarly: false, warnings: true },
+    // https://github.com/arb/celebrate#modes - validates the entire request object and collects all the validation failures in the result.
+    { mode: 'full' }
+  ),
+  modifyAppointment
+);
 
 // test routes
 router.route('/test').post(testRequestValidation);
