@@ -16,7 +16,7 @@ POST http://localhost:3001/api/appointments
 Content-Type: application/json
 
 {
-  "date": "2024-01-29", 
+  "date": "2024-02-01", 
   "startTime": "17:00", 
   "endTime": "17:30",
   "clientId": "383dc04f-9903-4037-b070-ca502d7dd7f9",
@@ -49,3 +49,6 @@ Content-Type: application/json
   "employeeId": "6383181b-e1e5-4931-a43f-090eccd9f7e7",
   "service": "Haircut"
 }
+
+### New Appointment test after validation
+POST http://localhost:3001/api/appointments/test

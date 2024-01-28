@@ -17,3 +17,5 @@ Server side application for the Cut Above Barbershop using a Postgres Database a
 [How to extract Celebrate error messages for use in my custom error handler.](https://stackoverflow.com/a/56865784)
 
 [How to handle multiple validation errors and log them all into the error handler](https://github.com/arb/celebrate#modes)
+
+How to [prevent](https://github.com/arb/celebrate#celebrateschema-joioptions-opts) a [validated date](https://github.com/hapijs/joi/blob/master/API.md#anyvalidatevalue-options) to be cast into an [ISO Date String](https://joi.dev/api/?v=17.12.0#date) which would have caused time zone issues.

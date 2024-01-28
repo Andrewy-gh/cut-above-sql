@@ -24,22 +24,6 @@ export const getAllAppointments = async (req, res) => {
 // }
 
 /**
- * @description test route custom request validator
- * @route /api/appointments/test
- * @method POST
- * @returns {Appointment | Error}, returns a valid Appointment object or Error
- */
-export const testRequestValidation = async (req, res) => {
-  try {
-    const isValidReq = await validateNewRequest(req.body);
-    res.json(isValidReq);
-  } catch (error) {
-    console.log(error);
-    return res.status(500).json({ error });
-  }
-};
-
-/**
  * @description book a new appointment
  * @route /api/appointments
  * @method POST
@@ -51,50 +35,43 @@ export const bookAppointment = async (req, res) => {
 };
 
 /**
+ * @description function to test booking an appointment
+ * @route /api/appointments/test
+ * @method POST
+ * @returns {Appointment}, returns an Appointment object
+ */
+export const testBookingAppontment = async (req, res) => {
+  const newAppt = {
+    date: '2024-01-27',
+    startTime: '17:00',
+    endTime: '17:30',
+    clientId: '383dc04f-9903-4037-b070-ca502d7dd7f9',
+    employeeId: 'e123b115-d3a2-4c7e-a45d-f82fde101161',
+    service: 'Haircut',
+  };
+  const appointment = await Appointment.create({
+    ...newAppt,
+    scheduleId: '32c237aa-8550-44f8-a313-b99737047872',
+  });
+  res.json(appointment);
+};
+
+/**
  * @description modify an appointment
  * @route /api/appointments/:id
  * @method PUT
  * @returns {Appointment | Error}, returns a valid Appointment object or Error
  */
 export const modifyAppointment = async (req, res) => {
+  console.log('====================================');
+  console.log('req.body: ', req.body);
+  console.log('====================================');
   const updatedAppointment = await update({
     ...req.body,
     id: req.params.id,
   });
   res.json(updatedAppointment);
 };
-
-// router.put('/:id', async (req, res) => {
-//   try {
-//     // const isValidReq = await validateNewRequest(req.body);
-//     // if (!isValidReq) {
-//     //   return res.status(400).end();
-//     // }
-//     // await updateAppointment({ ...isValidReq, id: req.params.id });
-//     const appointment = await Appointment.findByPk(req.params.id);
-//     if (!appointment) {
-//       return res.status(404).json({ error: 'appointment not found' });
-//     }
-//     // date has been changed
-//     if (req.body.date && req.body.date !== appointment.date) {
-//       const schedule = await appointment.getSchedule();
-//       await schedule.removeAppointment(appointment);
-//       const [newSchedule] = await Schedule.findOrCreate({
-//         where: { date: req.body.date },
-//       });
-//       await appointment.update({
-//         date: req.body.date,
-//         scheduleId: newSchedule.id,
-//       });
-//     } else {
-//       await appointment.update(req.body);
-//     }
-//     res.json(appointment);
-//   } catch (error) {
-//     console.log('error: ', error);
-//     return res.status(500).json({ error: 'Error updating appointment' });
-//   }
-// });
 
 /**
  * @description function to test modifying an appointment
