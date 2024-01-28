@@ -16,10 +16,4 @@ export const checkScheduleAvailability = async (newAppt) => {
     throw new ApiError(410, 'Appointment not available'); // Gone
   }
   return schedule.id;
-  // if (available) {
-  //   return schedule.id;
-  // } else {
-  //   return false;
-  // }
-  // return schedule.id;
 };

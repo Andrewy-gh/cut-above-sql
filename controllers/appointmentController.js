@@ -1,6 +1,4 @@
 import { Appointment } from '../models/index.js';
-import { checkScheduleAvailability } from '../services/scheduleService.js';
-import { validateNewRequest } from '../utils/validation.js';
 import { createNew, update } from '../services/appointmentService.js';
 
 /**
@@ -13,15 +11,6 @@ export const getAllAppointments = async (req, res) => {
   const appointments = await Appointment.findAll();
   res.json(appointments);
 };
-
-// req.body from client:
-// {
-//   date: '2024-02-02',
-//   start: '17:30',
-//   end: '18:00',
-//   service: 'Haircut',
-//   employee: '64a60e878bdf8a4ac0f98209'
-// }
 
 /**
  * @description book a new appointment
@@ -63,9 +52,6 @@ export const testBookingAppontment = async (req, res) => {
  * @returns {Appointment | Error}, returns a valid Appointment object or Error
  */
 export const modifyAppointment = async (req, res) => {
-  console.log('====================================');
-  console.log('req.body: ', req.body);
-  console.log('====================================');
   const updatedAppointment = await update({
     ...req.body,
     id: req.params.id,
