@@ -68,7 +68,7 @@ export const checkScheduleAvailability = async (req, res) => {
  * @description function to test schedule availability
  * @route /api/schedules/:id
  * @method DELETE
- * @returns {Boolean},
+ * @returns {Response}, 200 OK
  */
 export const deleteScheduleById = async (req, res) => {
   const schedule = await Schedule.findByPk(req.params.id);

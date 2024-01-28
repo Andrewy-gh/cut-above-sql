@@ -1,4 +1,5 @@
 import { Router } from 'express';
+import { celebrate, Segments } from 'celebrate';
 import {
   getAllAppointments,
   testRequestValidation,
@@ -8,7 +9,6 @@ import {
   deleteAppointmentById,
 } from '../controllers/appointmentController.js';
 import { bodySchema, paramsSchema } from '../schemas/index.js';
-import { celebrate, Joi, Segments } from 'celebrate';
 
 const router = Router();
 

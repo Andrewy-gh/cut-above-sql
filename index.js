@@ -6,7 +6,6 @@ import { PORT } from './utils/config.js';
 import { connectToDatabase } from './utils/db.js';
 import router from './routes/index.js';
 import errorHandler from './middlewares/errorHandler.js';
-import { errors } from 'celebrate';
 
 const app = express();
 
@@ -17,7 +16,6 @@ app.use(bodyParser.json());
 app.use('/', router);
 
 // error handler middleware
-// app.use(errors());
 app.use(errorHandler);
 
 const start = async () => {
