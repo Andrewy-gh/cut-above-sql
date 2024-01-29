@@ -1,6 +1,6 @@
 import ApiError from '../utils/ApiError.js';
 import { isCelebrateError } from 'celebrate';
-import logger from '../utils/logger.js';
+import logger from '../utils/logger/index.js';
 
 const errorHandler = async (err, req, res, next) => {
   logger.error('====================================');
