@@ -1,5 +1,6 @@
 ###
 GET http://localhost:3001/api/users
+Origin: http://localhost:3001
 
 ### hard coded to role currently DO NOT USE
 GET http://localhost:3001/api/users/6ac161c5-b033-412e-8d35-06cd46dbd59a

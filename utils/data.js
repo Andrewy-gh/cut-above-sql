@@ -1,42 +1,60 @@
+import bcrypt from 'bcrypt';
+
 export const users = [
   {
+    firstName: 'First',
+    lastName: 'User',
     email: 'user1@email.com',
-    name: 'Test User',
+    passwordHash: bcrypt.hashSync('123456', 10),
     role: 'client',
   },
   {
+    firstName: 'Second',
+    lastName: 'User',
     email: 'user2@email.com',
-    name: 'Test User 2',
+    passwordHash: bcrypt.hashSync('123456', 10),
     role: 'client',
   },
   {
+    firstName: 'Third',
+    lastName: 'User',
     email: 'user3@email.com',
-    name: 'Test User 3',
+    passwordHash: bcrypt.hashSync('123456', 10),
     role: 'client',
   },
   {
+    firstName: 'Fourth',
+    lastName: 'User',
     email: 'user4@email.com',
-    name: 'Test User 4',
+    passwordHash: bcrypt.hashSync('123456', 10),
     role: 'client',
   },
   {
+    firstName: 'Jane',
+    lastName: 'Doe',
     email: 'jane@email.com',
-    name: 'Jane Doe',
+    passwordHash: bcrypt.hashSync('123456', 10),
     role: 'employee',
   },
   {
+    firstName: 'John',
+    lastName: 'Doe',
     email: 'john@email.com',
-    name: 'John Doe',
+    passwordHash: bcrypt.hashSync('123456', 10),
     role: 'employee',
   },
   {
+    firstName: 'Jane',
+    lastName: 'Smith',
     email: 'janes@email.com',
-    name: 'Jane Smith',
+    passwordHash: bcrypt.hashSync('123456', 10),
     role: 'employee',
   },
   {
+    firstName: 'John',
+    lastName: 'Smith',
     email: 'johns@email.com',
-    name: 'John Smith',
+    passwordHash: bcrypt.hashSync('123456', 10),
     role: 'employee',
   },
 ];

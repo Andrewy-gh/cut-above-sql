@@ -11,22 +11,36 @@ User.init(
       allowNull: false,
       primaryKey: true,
     },
+    firstName: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    lastName: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
     email: {
       type: DataTypes.STRING,
       unique: true,
       allowNull: false,
       validate: { isEmail: true },
     },
-    name: {
+    passwordHash: {
       type: DataTypes.STRING,
       allowNull: false,
     },
     role: {
-      type: DataTypes.STRING,
+      type: DataTypes.ENUM('client', 'employee', 'admin'),
       defaultValue: 'client',
+      allowNull: false,
     },
   },
-  { sequelize, underscored: true, modelName: 'user' }
+  {
+    defaultScope: { attributes: { exclude: ['passwordHash'] } },
+    sequelize,
+    underscored: true,
+    modelName: 'user',
+  }
 );
 
 export default User;
