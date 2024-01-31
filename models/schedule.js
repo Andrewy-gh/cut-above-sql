@@ -12,7 +12,15 @@ Schedule.init(
       primaryKey: true,
     },
     date: {
-      type: DataTypes.DATEONLY,
+      type: DataTypes.DATE,
+      allowNull: false,
+    },
+    open: {
+      type: DataTypes.DATE,
+      allowNull: false,
+    },
+    close: {
+      type: DataTypes.DATE,
       allowNull: false,
     },
   },

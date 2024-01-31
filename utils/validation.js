@@ -78,16 +78,16 @@ export const validateNewRequest = async (object) => {
   if (
     'date' in object &&
     'clientId' in object &&
-    'startTime' in object &&
-    'endTime' in object &&
+    'start' in object &&
+    'end' in object &&
     'service' in object &&
     'employeeId' in object
   ) {
     const newAppointment = {
       date: parseDate(object.date),
       clientId: await parseUser(object.clientId, 'client'),
-      startTime: parseTime(object.startTime),
-      endTime: parseTime(object.endTime),
+      start: parseTime(object.start),
+      end: parseTime(object.end),
       service: parseService(object.service),
       employeeId: await parseUser(object.employeeId, 'employee'),
     };

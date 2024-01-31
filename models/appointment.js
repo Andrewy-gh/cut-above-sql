@@ -12,15 +12,15 @@ Appointment.init(
       primaryKey: true,
     },
     date: {
-      type: DataTypes.DATEONLY,
+      type: DataTypes.DATE,
       allowNull: false,
     },
-    startTime: {
-      type: DataTypes.TIME,
+    start: {
+      type: DataTypes.DATE,
       allowNull: false,
     },
-    endTime: {
-      type: DataTypes.TIME,
+    end: {
+      type: DataTypes.DATE,
       allowNull: false,
     },
     service: {

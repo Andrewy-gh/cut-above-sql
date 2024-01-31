@@ -30,7 +30,6 @@ export const getAccount = async (req, res) => {
  * @returns {Response | Error} 204 for successful response
  */
 export const logout = async (req, res) => {
-  console.log('received');
   const { user } = req.session;
   req.session.destroy((err) => {
     if (err) {

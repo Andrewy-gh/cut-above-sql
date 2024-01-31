@@ -1,16 +1,3 @@
-### This a test for validating requests
-POST http://localhost:3001/api/appointments/test
-Content-Type: application/json
-
-{
-  "date": "2024-01-28", 
-  "startTime": "17:00", 
-  "endTime": "17:30",
-  "clientId": "383dc04f-9903-4037-b070-ca502d7dd7f9",
-  "employeeId": "6383181b-e1e5-4931-a43f-090eccd9f7e7",
-  "service": "Haircut"
-}
-
 ### New appointment test
 POST http://localhost:3001/api/appointments
 Origin: http://localhost:3001
@@ -18,8 +5,8 @@ Content-Type: application/json
 
 {
   "date": "2024-02-01", 
-  "startTime": "17:00", 
-  "endTime": "17:30",
+  "start": "17:00",
+  "end": "17:30",
   "clientId": "747041dd-6837-497b-be49-9ebe5aab399d",
   "employeeId": "a0107c2f-bfa3-41ab-a903-55c6da4a8773",
   "service": "Haircut"
@@ -31,8 +18,8 @@ Content-Type: application/json
 
 {
   "date": "2024-01-26", 
-  "startTime": "not_a_valid_time", 
-  "endTime": "17:30",
+  "start": "not_a_valid_time", 
+  "end": "17:30",
   "clientId": "96b0cfd3-8c5f-4bb7-8946-c550e1e36f99",
   "employeeId": "6383181b-e1e5-4931-a43f-090eccd9f7e7",
   "service": "Haircut"
@@ -44,8 +31,8 @@ Content-Type: application/json
 
 {
   "date": "2024-01-26", 
-  "startTime": "17:00", 
-  "endTime": "17:30",
+  "start": "17:00", 
+  "end": "17:30",
   "clientId": "96b0cfd3-8c5f-4bb7-8946-c550e1e36f99",
   "employeeId": "6383181b-e1e5-4931-a43f-090eccd9f7e7",
   "service": "Haircut"
@@ -53,3 +40,4 @@ Content-Type: application/json
 
 ### New Appointment test after validation
 POST http://localhost:3001/api/appointments/test
+Origin: http://localhost:3001

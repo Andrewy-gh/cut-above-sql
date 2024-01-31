@@ -10,8 +10,8 @@ Content-Type: application/json
 
 {
   "date": "2024-02-03",
-  "startTime": "12:00",
-  "endTime": "13:00",
+  "start": "12:00",
+  "end": "13:00",
   "service": "The Full Package",
   "clientId": "6ac161c5-b033-412e-8d35-06cd46dbd59a",
   "employeeId": "e123b115-d3a2-4c7e-a45d-f82fde101161"
@@ -23,8 +23,8 @@ Content-Type: application/json
 
 {
   "date": "2024-01-29",
-  "startTime": "",
-  "endTime": "12:30",
+  "start": "",
+  "end": "12:30",
   "service": "The Full Package",
   "clientId": "6ac161c5-b033-412e-8d35-06cd46dbd59a",
   "employeeId": "e123b115-d3a2-4c7e-a45d-f82fde101161"

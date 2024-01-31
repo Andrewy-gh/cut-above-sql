@@ -1,0 +1,3 @@
+###
+GET http://localhost:3001/api/employees
+Origin: http://localhost:3001

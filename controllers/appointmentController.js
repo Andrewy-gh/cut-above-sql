@@ -1,5 +1,7 @@
 import { Appointment } from '../models/index.js';
 import { createNew, update } from '../services/appointmentService.js';
+import { formatDateAndTimes } from '../utils/dateTime.js';
+import logger from '../utils/logger/index.js';
 
 /**
  * @description retrieve all appointments
@@ -19,7 +21,18 @@ export const getAllAppointments = async (req, res) => {
  * @returns {Appointment | Error}, returns a valid Appointment object or Error
  */
 export const bookAppointment = async (req, res) => {
-  const appointment = await createNew(req.body);
+  console.log('====================================');
+  console.log(req.body);
+  console.log('====================================');
+  const formattedDateAndTimes = formatDateAndTimes(req.body);
+  console.log('====================================');
+  console.log({ ...req.body, ...formattedDateAndTimes });
+  console.log('====================================');
+  logger.debug(JSON.stringify(formatDateAndTimes));
+  const appointment = await createNew({
+    ...req.body,
+    ...formattedDateAndTimes,
+  });
   res.json(appointment);
 };
 
@@ -31,17 +44,14 @@ export const bookAppointment = async (req, res) => {
  */
 export const testBookingAppontment = async (req, res) => {
   const newAppt = {
-    date: '2024-01-27',
-    startTime: '17:00',
-    endTime: '17:30',
-    clientId: '383dc04f-9903-4037-b070-ca502d7dd7f9',
-    employeeId: 'e123b115-d3a2-4c7e-a45d-f82fde101161',
+    date: '2024-02-01T05:00:00.000Z',
+    start: '2024-02-01T22:00:00.000Z',
+    end: '2024-02-01T22:30:00.000Z',
+    clientId: '747041dd-6837-497b-be49-9ebe5aab399d',
+    employeeId: 'a0107c2f-bfa3-41ab-a903-55c6da4a8773',
     service: 'Haircut',
   };
-  const appointment = await Appointment.create({
-    ...newAppt,
-    scheduleId: '32c237aa-8550-44f8-a313-b99737047872',
-  });
+  const appointment = await Appointment.create(newAppt);
   res.json(appointment);
 };
 
@@ -68,8 +78,8 @@ export const modifyAppointment = async (req, res) => {
 export const testAppointmentUpdate = async (req, res) => {
   const newAppt = {
     date: '2024-01-28',
-    startTime: '14:00:00',
-    endTime: '14:30:00',
+    start: '14:00:00',
+    end: '14:30:00',
     clientId: '96b0cfd3-8c5f-4bb7-8946-c550e1e36f99',
     employeeId: '6383181b-e1e5-4931-a43f-090eccd9f7e7',
   };

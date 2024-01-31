@@ -52,8 +52,8 @@ export const getAllSchedules = async (req, res) => {
 export const checkScheduleAvailability = async (req, res) => {
   const newAppt = {
     date: '2024-01-25',
-    startTime: '17:00:00',
-    endTime: '17:30:00',
+    start: '17:00:00',
+    end: '17:30:00',
     clientId: '96b0cfd3-8c5f-4bb7-8946-c550e1e36f99',
     employeeId: '6383181b-e1e5-4931-a43f-090eccd9f7e7',
   };
