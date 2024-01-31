@@ -1,5 +1,6 @@
 ###
 GET http://localhost:3001/api/schedules
+Origin: http://localhost:3001
 
 ###
 DELETE http://localhost:3001/api/schedules/b83bd62a-4a41-46b4-bcdd-e5707f6fc419

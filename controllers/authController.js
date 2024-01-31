@@ -1,3 +1,5 @@
+import { authenticateUser } from '../services/authService.js';
+
 /**
  * @description login user
  * @route /login
@@ -5,9 +7,8 @@
  * @returns {Response | Error} 204 for successful response
  */
 export const login = async (req, res) => {
-  const { email, password } = req.body;
-  req.session.user = email;
-  // add username and password validation logic here if you want.If user is authenticated send the response as success
+  const user = await authenticateUser(req.body);
+  req.session.user = user;
   res.status(204).end();
 };
 

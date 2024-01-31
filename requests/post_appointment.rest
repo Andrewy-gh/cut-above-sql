@@ -13,14 +13,15 @@ Content-Type: application/json
 
 ### New appointment test
 POST http://localhost:3001/api/appointments
+Origin: http://localhost:3001
 Content-Type: application/json
 
 {
   "date": "2024-02-01", 
   "startTime": "17:00", 
   "endTime": "17:30",
-  "clientId": "383dc04f-9903-4037-b070-ca502d7dd7f9",
-  "employeeId": "e123b115-d3a2-4c7e-a45d-f82fde101161",
+  "clientId": "747041dd-6837-497b-be49-9ebe5aab399d",
+  "employeeId": "a0107c2f-bfa3-41ab-a903-55c6da4a8773",
   "service": "Haircut"
 }
 

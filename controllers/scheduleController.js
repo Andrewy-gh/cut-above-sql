@@ -25,16 +25,16 @@ export const getAllSchedules = async (req, res) => {
         },
         include: [
           {
-            model: User,
+            model: User.scope('withoutPassword'),
             as: 'client',
-            attributes: {
-              exclude: ['createdAt', 'updatedAt'],
-            },
+            // attributes: {
+            //   exclude: ['createdAt', 'updatedAt'],
+            // },
           },
           {
-            model: User,
+            model: User.scope('withoutPassword'),
             as: 'employee',
-            attributes: { exclude: ['createdAt', 'updatedAt'] },
+            // attributes: { exclude: ['createdAt', 'updatedAt'] },
           },
         ],
       },

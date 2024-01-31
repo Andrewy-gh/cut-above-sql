@@ -37,6 +37,15 @@ User.init(
   },
   {
     defaultScope: { attributes: { exclude: ['passwordHash'] } },
+    scopes: {
+      withoutPassword: {
+        attributes: { exclude: ['passwordHash'] },
+      },
+      // only used to log in user
+      withPassword: {
+        attributes: { include: ['passwordHash'] },
+      },
+    },
     sequelize,
     underscored: true,
     modelName: 'user',
