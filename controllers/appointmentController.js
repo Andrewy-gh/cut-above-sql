@@ -16,22 +16,23 @@ export const getAllAppointments = async (req, res) => {
 
 /**
  * @description book a new appointment
+ * @params {
+ *   date: '2024-02-02',
+ *   start: '10:00',
+ *   end: '10:30',
+ *   service: 'Haircut',
+ *   employee: '0b4e6b4d-b28c-4f82-b9b6-9fec81d773de'
+ * }
  * @route /api/appointments
  * @method POST
  * @returns {Appointment | Error}, returns a valid Appointment object or Error
  */
 export const bookAppointment = async (req, res) => {
-  console.log('====================================');
-  console.log(req.body);
-  console.log('====================================');
   const formattedDateAndTimes = formatDateAndTimes(req.body);
-  console.log('====================================');
-  console.log({ ...req.body, ...formattedDateAndTimes });
-  console.log('====================================');
-  logger.debug(JSON.stringify(formatDateAndTimes));
   const appointment = await createNew({
     ...req.body,
     ...formattedDateAndTimes,
+    clientId: req.session.user.id,
   });
   res.json(appointment);
 };

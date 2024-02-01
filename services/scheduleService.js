@@ -1,25 +1,16 @@
 import { Schedule } from '../models/index.js';
 import { checkAvailability } from '../utils/dateTime.js';
 import ApiError from '../utils/ApiError.js';
-import { convertDate, convertDateAndTime } from '../utils/dateTime.js';
-
-const defaultOpeningTime = '10:00';
-const defaultClosingTime = '18:00';
+import { convertDate } from '../utils/dateTime.js';
 
 export const checkScheduleAvailability = async (newAppt) => {
-  const date = convertDate(newAppt.date);
-  const open = convertDateAndTime(newAppt.date, defaultOpeningTime);
-  const close = convertDateAndTime(newAppt.date, defaultClosingTime);
-  const [schedule, created] = await Schedule.findOrCreate({
-    where: { date },
-    defaults: {
-      open,
-      close,
-    },
-  });
-  if (created) {
-    return schedule.id;
+  // must convert from dayjs obj to iso string for query
+  const date = convertDate(newAppt.date).toISOString();
+  const schedule = await Schedule.findOne({ where: { date } });
+  if (!schedule) {
+    throw new ApiError(410, 'Schedule not available');
   }
+  // TODO: Eager load appointments
   const appointments = await schedule.getAppointments();
   // TODO: check before open or check after close too
   const available = checkAvailability(appointments, newAppt);

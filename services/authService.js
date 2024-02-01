@@ -14,6 +14,7 @@ export const authenticateUser = async (credentials) => {
     throw new ApiError(401, 'Unauthorized');
   }
   return {
+    id: user.id,
     email: user.email,
     firstName: user.firstName,
     lastName: user.lastName,

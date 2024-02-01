@@ -9,7 +9,6 @@ export const bodySchema = Joi.object({
   end: Joi.string()
     .regex(/^\d{2}:\d{2}$/)
     .required(),
-  clientId: Joi.string().guid().required(),
   employeeId: Joi.string().guid().required(),
   // ! TODO: add custom validator for service
   service: Joi.string().required(),

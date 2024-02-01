@@ -3,7 +3,7 @@ GET http://localhost:3001/api/schedules
 Origin: http://localhost:3001
 
 ###
-DELETE http://localhost:3001/api/schedules/c42c4bb7-dbda-41ce-bd5a-e380d116352a
+DELETE http://localhost:3001/api/schedules/f89ab822-79e8-42b4-af84-ded1304b6595
 Origin: http://localhost:3001
 
 ### 

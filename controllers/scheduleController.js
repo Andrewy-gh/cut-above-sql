@@ -53,12 +53,10 @@ export const createNewSchedule = async (req, res) => {
   const { dates, open, close } = req.body;
   const dateRangeToSchedule = generateRange(dates, open, close);
   const newSchedules = dateRangeToSchedule.map((s) => {
-    return Schedule.findOrCreate({
-      where: { date: s.date },
-      defaults: {
-        open: s.open,
-        close: s.close,
-      },
+    return Schedule.create({
+      date: s.date,
+      open: s.open,
+      close: s.close,
     });
   });
   const savedSchedules = await Promise.all(newSchedules);
