@@ -2,12 +2,14 @@ import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc.js';
 import timezone from 'dayjs/plugin/timezone.js';
 import isBetween from 'dayjs/plugin/isBetween.js';
+import isSameOrBefore from 'dayjs/plugin/isSameOrBefore.js';
 
 import logger from './logger/index.js';
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
 dayjs.extend(isBetween);
+dayjs.extend(isSameOrBefore);
 
 const selectedTimeZone = 'America/New_York';
 

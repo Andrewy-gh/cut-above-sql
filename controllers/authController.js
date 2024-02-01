@@ -10,7 +10,9 @@ import { authenticateUser } from '../services/authService.js';
 export const login = async (req, res) => {
   const user = await authenticateUser(req.body);
   req.session.user = user;
-  res.status(204).end();
+  res
+    .status(200)
+    .json({ success: true, message: 'Successfully logged in', user: user });
 };
 
 /**

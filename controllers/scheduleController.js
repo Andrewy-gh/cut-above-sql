@@ -1,5 +1,5 @@
 import { Schedule, Appointment, User } from '../models/index.js';
-import { checkAvailability } from '../utils/dateTime.js';
+import { checkAvailability, generateRange } from '../utils/dateTime.js';
 
 /**
  * @description retrieve all schedules
@@ -41,6 +41,32 @@ export const getAllSchedules = async (req, res) => {
     ],
   });
   res.json(schedules);
+};
+
+/**
+ * @description create a single or multiple schedules
+ * @route /api/schedules
+ * @method POST
+ * @returns {Schedule | Schedule[]}, array of Schedule objects
+ */
+export const createNewSchedule = async (req, res) => {
+  const { dates, open, close } = req.body;
+  const dateRangeToSchedule = generateRange(dates, open, close);
+  const newSchedules = dateRangeToSchedule.map((s) => {
+    return Schedule.findOrCreate({
+      where: { date: s.date },
+      defaults: {
+        open: s.open,
+        close: s.close,
+      },
+    });
+  });
+  const savedSchedules = await Promise.all(newSchedules);
+  res.status(201).json({
+    success: true,
+    message: 'New schedule added',
+    data: savedSchedules,
+  });
 };
 
 /**
