@@ -80,7 +80,7 @@ export const generateRange = (dates, open, close) => {
 export const formatDateAndTimes = (appointment) => {
   return {
     date: convertDate(appointment.date),
-    start: convertDateAndTime(appointment.date, appointment.start),
-    end: convertDateAndTime(appointment.date, appointment.end),
+    // start: convertDateAndTime(appointment.date, appointment.start),
+    // end: convertDateAndTime(appointment.date, appointment.end),
   };
 };

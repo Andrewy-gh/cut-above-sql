@@ -28,13 +28,14 @@ export const getAllAppointments = async (req, res) => {
  * @returns {Appointment | Error}, returns a valid Appointment object or Error
  */
 export const bookAppointment = async (req, res) => {
-  const formattedDateAndTimes = formatDateAndTimes(req.body);
-  const appointment = await createNew({
+  await createNew({
     ...req.body,
-    ...formattedDateAndTimes,
     clientId: req.session.user.id,
   });
-  res.json(appointment);
+  res.status(200).json({
+    success: true,
+    message: 'Appointment successfully updated',
+  });
 };
 
 /**

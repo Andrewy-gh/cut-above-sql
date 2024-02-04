@@ -4,9 +4,12 @@ import ApiError from '../utils/ApiError.js';
 import { convertDate } from '../utils/dateTime.js';
 
 export const checkScheduleAvailability = async (newAppt) => {
+  // ! Prev
   // must convert from dayjs obj to iso string for query
-  const date = convertDate(newAppt.date).toISOString();
-  const schedule = await Schedule.findOne({ where: { date } });
+  // const date = convertDate(newAppt.date).toISOString();
+  // const schedule = await Schedule.findOne({ where: { date } });
+  // ! New newAppt.date is already ISO String
+  const schedule = await Schedule.findOne({ where: { date: newAppt.date } });
   if (!schedule) {
     throw new ApiError(410, 'Schedule not available');
   }
