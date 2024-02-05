@@ -1,5 +1,18 @@
 import logger from '../utils/logger/index.js';
-import { authenticateUser } from '../services/authService.js';
+import { authenticateUser, registerUser } from '../services/authService.js';
+
+/**
+ * @description register user
+ * @route /signup
+ * @method POST
+ * @returns {Response | Error} 204 for successful response
+ */
+export const register = async (req, res) => {
+  await registerUser(req.body);
+  res
+    .status(200)
+    .json({ success: true, message: 'Successfully registered account' });
+};
 
 /**
  * @description login user

@@ -1,6 +1,11 @@
 import { Router } from 'express';
 import { authenticateUser } from '../middlewares/authenticateUser.js';
-import { login, getAccount, logout } from '../controllers/authController.js';
+import {
+  login,
+  getAccount,
+  logout,
+  register,
+} from '../controllers/authController.js';
 
 const router = Router();
 
@@ -8,5 +13,6 @@ const router = Router();
 router.route('/login').post(login);
 router.route('/account').get(authenticateUser, getAccount);
 router.route('/logout').get(logout);
+router.route('/signup').post(register);
 
 export default router;

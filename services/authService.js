@@ -2,6 +2,12 @@ import bcrypt from 'bcrypt';
 import { User } from '../models/index.js';
 import ApiError from '../utils/ApiError.js';
 
+export const registerUser = async (credentials) => {
+  const { firstName, lastName, email, password } = credentials;
+  const passwordHash = await bcrypt.hash(password, 10);
+  return await User.create({ firstName, lastName, email, passwordHash });
+};
+
 export const authenticateUser = async (credentials) => {
   const user = await User.scope('withPassword').findOne({
     where: { email: credentials.email },
