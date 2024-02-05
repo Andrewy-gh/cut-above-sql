@@ -45,11 +45,14 @@ export const bookAppointment = async (req, res) => {
  * @returns {Appointment | Error}, returns a valid Appointment object or Error
  */
 export const modifyAppointment = async (req, res) => {
-  const updatedAppointment = await update({
+  await update({
     ...req.body,
     id: req.params.id,
   });
-  res.json(updatedAppointment);
+  res.status(200).json({
+    success: true,
+    message: 'Appointment successfully updated',
+  });
 };
 
 /**
@@ -77,7 +80,9 @@ export const updateAppointmentStatus = async (req, res) => {
 export const deleteAppointmentById = async (req, res) => {
   const appointment = await Appointment.findByPk(req.params.id);
   await appointment.destroy();
-  res.status(200).end();
+  res
+    .status(200)
+    .json({ success: true, message: 'Appointment successfully cancelled' });
 };
 
 /**

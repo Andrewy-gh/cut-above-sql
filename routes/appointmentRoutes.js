@@ -56,10 +56,12 @@ router
       // https://github.com/arb/celebrate#modes - validates the entire request object and collects all the validation failures in the result.
       { mode: 'full' }
     ),
+    authenticateUser,
     modifyAppointment
   )
   .delete(
     celebrate({ [Segments.PARAMS]: paramsSchema }),
+    authenticateUser,
     deleteAppointmentById
   );
 

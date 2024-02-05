@@ -7,14 +7,23 @@ import {
   createNewSchedule,
 } from '../controllers/scheduleController.js';
 import { paramsSchema } from '../schemas/index.js';
+import {
+  authenticateUser,
+  authenticateRole,
+} from '../middlewares/authenticateUser.js';
 
 const router = Router();
 
-router.route('/').get(getAllSchedules).post(createNewSchedule);
+router
+  .route('/')
+  .get(authenticateUser, authenticateRole, getAllSchedules)
+  .post(authenticateUser, authenticateRole, createNewSchedule);
 router.route('/:id').delete(
   celebrate({
     [Segments.PARAMS]: paramsSchema,
   }),
+  authenticateUser,
+  authenticateRole,
   deleteScheduleById
 );
 
