@@ -24,12 +24,12 @@ router
     celebrate(
       {
         [Segments.BODY]: bodySchema,
-      },
+      }
       // https://github.com/arb/celebrate#celebrateschema-joioptions-opts
       // https://github.com/hapijs/joi/blob/master/API.md#anyvalidatevalue-options
       // https://joi.dev/api/?v=17.12.0#date
       //  If the validation convert option is on (enabled by default), a string or number will be converted to a Date if specified.
-      { convert: false }
+      // { convert: false }
     ),
     authenticateUser,
     bookAppointment
@@ -52,7 +52,11 @@ router
         [Segments.BODY]: bodySchema,
         [Segments.PARAMS]: paramsSchema,
       },
-      { abortEarly: false, warnings: true, convert: false },
+      {
+        abortEarly: false,
+        warnings: true,
+        // convert: false
+      },
       // https://github.com/arb/celebrate#modes - validates the entire request object and collects all the validation failures in the result.
       { mode: 'full' }
     ),
