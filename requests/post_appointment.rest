@@ -4,25 +4,24 @@ Origin: http://localhost:3001
 Content-Type: application/json
 
 {
-  "date": "2024-02-01", 
-  "start": "17:00",
-  "end": "17:30",
-  "clientId": "747041dd-6837-497b-be49-9ebe5aab399d",
-  "employeeId": "a0107c2f-bfa3-41ab-a903-55c6da4a8773",
+  "date": "2024-02-12T05:00:00.000Z", 
+  "start": "2024-02-12T15:00:00.000Z",
+  "end": "2024-02-12T15:30:00.000Z",
+  "employeeId": "7c6e964d-fc27-44f3-998c-07e27a542dbd",
   "service": "Haircut"
 }
 
-### New appointment test should not pass validation
+### Test to validate service
 POST http://localhost:3001/api/appointments
+Origin: http://localhost:3001
 Content-Type: application/json
 
 {
-  "date": "2024-01-26", 
-  "start": "not_a_valid_time", 
-  "end": "17:30",
-  "clientId": "96b0cfd3-8c5f-4bb7-8946-c550e1e36f99",
-  "employeeId": "6383181b-e1e5-4931-a43f-090eccd9f7e7",
-  "service": "Haircut"
+  "date": "2024-02-12T05:00:00.000Z", 
+  "start": "2024-02-12T15:30:00.000Z",
+  "end": "2024-02-12T16:00:00.000Z",
+  "employeeId": "7c6e964d-fc27-44f3-998c-07e27a542dbd",
+  "service": "Should not pass"
 }
 
 ### New appointment test with already booked timeslot

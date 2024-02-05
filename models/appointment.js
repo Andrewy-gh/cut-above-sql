@@ -24,11 +24,17 @@ Appointment.init(
       allowNull: false,
     },
     service: {
-      type: DataTypes.STRING,
+      type: DataTypes.ENUM(
+        'Haircut',
+        'Beard Trim',
+        'Straight Razor Shave',
+        'Cut and Shave Package',
+        'The Full Package'
+      ),
       allowNull: false,
     },
     status: {
-      type: DataTypes.STRING,
+      type: DataTypes.ENUM('scheduled', 'checked-in', 'completed', 'no show'),
       allowNull: false,
       defaultValue: 'scheduled',
     },

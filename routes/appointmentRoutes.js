@@ -4,12 +4,16 @@ import {
   getAllAppointments,
   bookAppointment,
   modifyAppointment,
+  updateAppointmentStatus,
   testAppointmentUpdate,
   deleteAppointmentById,
   testBookingAppontment,
 } from '../controllers/appointmentController.js';
-import { bodySchema, paramsSchema } from '../schemas/index.js';
-import authenticateUser from '../middlewares/authenticateUser.js';
+import { bodySchema, paramsSchema, statusSchema } from '../schemas/index.js';
+import {
+  authenticateUser,
+  authenticateRole,
+} from '../middlewares/authenticateUser.js';
 
 const router = Router();
 
@@ -29,6 +33,15 @@ router
     ),
     authenticateUser,
     bookAppointment
+  );
+
+router
+  .route('/status/:id')
+  .put(
+    celebrate({ [Segments.BODY]: statusSchema }),
+    authenticateUser,
+    authenticateRole,
+    updateAppointmentStatus
   );
 
 router

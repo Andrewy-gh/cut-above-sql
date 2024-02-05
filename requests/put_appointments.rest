@@ -4,6 +4,17 @@ GET http://localhost:3001/api/appointments
 ###
 DELETE http://localhost:3001/api/appointments/90b69c53-7d47-4fd0-966b-33ac8ba25d76
 
+
+
+### update appointment status 
+PUT http://localhost:3001/api/appointments/status/2e2b5f2a-57a6-41e4-b9e5-30de801c692f
+Origin: http://localhost:3001
+Content-Type: application/json
+
+{
+  "status": "checked-in"
+}
+
 ###
 PUT http://localhost:3001/api/appointments/2e2b5f2a-57a6-41e4-b9e5-30de801c692f
 Content-Type: application/json

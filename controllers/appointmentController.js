@@ -39,6 +39,48 @@ export const bookAppointment = async (req, res) => {
 };
 
 /**
+ * @description modify an appointment
+ * @route /api/appointments/:id
+ * @method PUT
+ * @returns {Appointment | Error}, returns a valid Appointment object or Error
+ */
+export const modifyAppointment = async (req, res) => {
+  const updatedAppointment = await update({
+    ...req.body,
+    id: req.params.id,
+  });
+  res.json(updatedAppointment);
+};
+
+/**
+ * @description update an appointment status
+ * @route /api/appointments/status/:id
+ * @method PUT
+ * @returns {Appointment | Error}, returns a valid Appointment object or Error
+ */
+export const updateAppointmentStatus = async (req, res) => {
+  await Appointment.update(
+    { status: req.body.status },
+    { where: { id: req.params.id } }
+  );
+  res
+    .status(200)
+    .json({ success: true, message: 'Appointment status updated' });
+};
+
+/**
+ * @description delete an Appointment by id
+ * @route /api/appointments/:id
+ * @method DELETE
+ * @returns {Response}, response with code 200 No Content
+ */
+export const deleteAppointmentById = async (req, res) => {
+  const appointment = await Appointment.findByPk(req.params.id);
+  await appointment.destroy();
+  res.status(200).end();
+};
+
+/**
  * @description function to test booking an appointment
  * @route /api/appointments/test
  * @method POST
@@ -55,20 +97,6 @@ export const testBookingAppontment = async (req, res) => {
   };
   const appointment = await Appointment.create(newAppt);
   res.json(appointment);
-};
-
-/**
- * @description modify an appointment
- * @route /api/appointments/:id
- * @method PUT
- * @returns {Appointment | Error}, returns a valid Appointment object or Error
- */
-export const modifyAppointment = async (req, res) => {
-  const updatedAppointment = await update({
-    ...req.body,
-    id: req.params.id,
-  });
-  res.json(updatedAppointment);
 };
 
 /**
@@ -89,16 +117,4 @@ export const testAppointmentUpdate = async (req, res) => {
   appointment.set(newAppt);
   await appointment.save();
   res.json(appointment);
-};
-
-/**
- * @description delete an Appointment by id
- * @route /api/appointments/:id
- * @method DELETE
- * @returns {Response}, response with code 200 No Content
- */
-export const deleteAppointmentById = async (req, res) => {
-  const appointment = await Appointment.findByPk(req.params.id);
-  await appointment.destroy();
-  res.status(200).end();
 };

@@ -16,9 +16,23 @@ export const bodySchema = Joi.object({
   end: Joi.string().isoDate().required(),
   employeeId: Joi.string().guid().required(),
   // ! TODO: add custom validator for service
-  service: Joi.string().required(),
+  service: Joi.string()
+    .valid(
+      'Haircut',
+      'Beard Trim',
+      'Straight Razor Shave',
+      'Cut and Shave Package',
+      'The Full Package'
+    )
+    .required(),
 });
 
 export const paramsSchema = Joi.object({
   id: Joi.string().guid().required(),
+});
+
+export const statusSchema = Joi.object({
+  status: Joi.string()
+    .valid('scheduled', 'checked-in', 'completed', 'no show')
+    .required(),
 });
