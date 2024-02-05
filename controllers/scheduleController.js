@@ -15,13 +15,7 @@ export const getAllSchedules = async (req, res) => {
         model: Appointment,
         as: 'appointments',
         attributes: {
-          exclude: [
-            'createdAt',
-            'updatedAt',
-            'clientId',
-            'employeeId',
-            'scheduleId',
-          ],
+          exclude: ['createdAt', 'updatedAt', 'scheduleId'],
         },
         include: [
           {
