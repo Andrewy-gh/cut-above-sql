@@ -1,7 +1,8 @@
+import { Redis } from 'ioredis';
 import session from 'express-session';
 import RedisStore from 'connect-redis';
 import { SESSION_SECRET } from '../utils/config.js';
-import redisClient from '../utils/redis.js';
+import { redisClient } from '../utils/redis.js';
 
 const sessionConfig = {
   store: new RedisStore({

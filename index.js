@@ -9,6 +9,7 @@ import errorHandler from './middlewares/errorHandler.js';
 import logger from './utils/logger/index.js';
 import session from './middlewares/session.js';
 import cors from './middlewares/cors.js';
+import { listenForMessage } from './services/emailService.js';
 
 const app = express();
 
@@ -20,6 +21,8 @@ app.options('*', cors);
 app.use(cors);
 
 app.use(session);
+
+listenForMessage();
 
 // routes
 app.use(router);
