@@ -34,6 +34,12 @@ User.init(
       defaultValue: 'client',
       allowNull: false,
     },
+    image: {
+      type: DataTypes.STRING,
+    },
+    profile: {
+      type: DataTypes.STRING,
+    },
   },
   {
     defaultScope: { attributes: { exclude: ['passwordHash'] } },
