@@ -1,7 +1,51 @@
-import { Schedule } from '../models/index.js';
+import { Appointment, Schedule } from '../models/index.js';
 import { checkAvailability } from '../utils/dateTime.js';
 import ApiError from '../utils/ApiError.js';
 import { convertDate } from '../utils/dateTime.js';
+
+export const getPublicSchedules = async (req, res) => {
+  return await Schedule.findAll({
+    attributes: { exclude: ['createdAt', 'updatedAt'] },
+    include: [
+      {
+        model: Appointment,
+        as: 'appointments',
+        attributes: {
+          exclude: ['createdAt', 'updatedAt', 'clientId', 'scheduleId'],
+        },
+      },
+    ],
+  });
+};
+
+export const getPrivateSchedules = async (req, res) => {
+  await Schedule.findAll({
+    attributes: { exclude: ['createdAt', 'updatedAt'] },
+    include: [
+      {
+        model: Appointment,
+        as: 'appointments',
+        attributes: {
+          exclude: ['createdAt', 'updatedAt', 'scheduleId'],
+        },
+        include: [
+          {
+            model: User.scope('withoutPassword'),
+            as: 'client',
+            // attributes: {
+            //   exclude: ['createdAt', 'updatedAt'],
+            // },
+          },
+          {
+            model: User.scope('withoutPassword'),
+            as: 'employee',
+            // attributes: { exclude: ['createdAt', 'updatedAt'] },
+          },
+        ],
+      },
+    ],
+  });
+};
 
 export const checkScheduleAvailability = async (newAppt) => {
   // ! Prev

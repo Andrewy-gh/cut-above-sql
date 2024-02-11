@@ -1,39 +1,29 @@
 import { Schedule, Appointment, User } from '../models/index.js';
 import { checkAvailability, generateRange } from '../utils/dateTime.js';
+import {
+  getPublicSchedules,
+  getPrivateSchedules,
+} from '../services/scheduleService.js';
 
 /**
- * @description retrieve all schedules
+ * @description retrieve all public schedules for booking page includes only employee id
  * @route /api/schedules
  * @method GET
  * @returns {Schedule[]}, array of Schedule objects
  */
-export const getAllSchedules = async (req, res) => {
-  const schedules = await Schedule.findAll({
-    attributes: { exclude: ['createdAt', 'updatedAt'] },
-    include: [
-      {
-        model: Appointment,
-        as: 'appointments',
-        attributes: {
-          exclude: ['createdAt', 'updatedAt', 'scheduleId'],
-        },
-        include: [
-          {
-            model: User.scope('withoutPassword'),
-            as: 'client',
-            // attributes: {
-            //   exclude: ['createdAt', 'updatedAt'],
-            // },
-          },
-          {
-            model: User.scope('withoutPassword'),
-            as: 'employee',
-            // attributes: { exclude: ['createdAt', 'updatedAt'] },
-          },
-        ],
-      },
-    ],
-  });
+export const getAllSchedulesPublic = async (_, res) => {
+  const schedules = await getPublicSchedules();
+  res.json(schedules);
+};
+
+/**
+ * @description retrieve all schedules with client and employee infromation
+ * @route /api/schedules/dashboard
+ * @method GET
+ * @returns {Schedule[]}, array of Schedule objects
+ */
+export const getAllSchedulesPrivate = async (_, res) => {
+  const schedules = await getPrivateSchedules();
   res.json(schedules);
 };
 

@@ -1,7 +1,8 @@
 import { Router } from 'express';
 import { celebrate, Segments } from 'celebrate';
 import {
-  getAllSchedules,
+  getAllSchedulesPublic,
+  getAllSchedulesPrivate,
   checkScheduleAvailability,
   deleteScheduleById,
   createNewSchedule,
@@ -16,7 +17,7 @@ const router = Router();
 
 router
   .route('/')
-  .get(authenticateUser, authenticateRole, getAllSchedules)
+  .get(getAllSchedulesPublic)
   .post(authenticateUser, authenticateRole, createNewSchedule);
 router.route('/:id').delete(
   celebrate({
@@ -26,6 +27,10 @@ router.route('/:id').delete(
   authenticateRole,
   deleteScheduleById
 );
+
+router
+  .route('/dashboard')
+  .get(authenticateUser, authenticateRole, getAllSchedulesPrivate);
 
 // test routes
 router.route('/:id/test').get(checkScheduleAvailability);
