@@ -7,3 +7,15 @@ export const REDIS_HOST = process.env.REDIS_HOST;
 export const REDIS_USERNAME = process.env.REDIS_USERNAME;
 export const REDIS_PASSWORD = process.env.REDIS_PASSWORD;
 export const SESSION_SECRET = process.env.SESSION_SECRET;
+export const EMAIL_SERVICE =
+  process.env.NODE_ENV === 'development'
+    ? process.env.DEV_EMAIL_SERVICE
+    : process.env.EMAIL_SERVICE;
+export const EMAIL_USER =
+  process.env.NODE_ENV === 'development'
+    ? process.env.DEV_EMAIL_USER
+    : process.env.EMAIL_USER;
+export const EMAIL_PASSWORD =
+  process.env.NODE_ENV === 'development'
+    ? process.env.DEV_EMAIL_PASSWORD
+    : process.env.EMAIL_PASSWORD;
