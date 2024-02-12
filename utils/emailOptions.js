@@ -43,7 +43,7 @@ const options = (
   if (option in templates) {
     return templates[option];
   } else {
-    throw new Error(`Invalid template option type: '${option}'`);
+    throw new Error(`Invalid template option type`);
   }
 };
 

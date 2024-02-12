@@ -1,4 +1,4 @@
-import { pub } from '../utils/redis.js';
+import { publishMessage } from '../services/emailService.js';
 
 /**
  * @description send a test email
@@ -6,8 +6,8 @@ import { pub } from '../utils/redis.js';
  * @method POST
  * @returns {Response}
  */
+
 export const sendEmail = async (req, res) => {
-  const obj = ['randomValue', Math.random()];
-  await pub.xadd('email-stream', 'MAXLEN', '3', '*', obj);
+  await publishMessage(req.body);
   res.json({ success: true, message: 'email sent' });
 };
