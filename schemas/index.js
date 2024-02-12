@@ -14,7 +14,10 @@ export const bodySchema = Joi.object({
   // ! New
   start: Joi.string().isoDate().required(),
   end: Joi.string().isoDate().required(),
-  employeeId: Joi.string().guid().required(),
+  employee: {
+    id: Joi.string().guid().required(),
+    firstName: Joi.string().required(),
+  },
   // ! TODO: add custom validator for service
   service: Joi.string()
     .valid(
