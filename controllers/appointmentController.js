@@ -1,4 +1,4 @@
-import { Appointment } from '../models/index.js';
+import { Appointment, User } from '../models/index.js';
 import { createNew, update } from '../services/appointmentService.js';
 import { formatDateAndTimes } from '../utils/dateTime.js';
 import logger from '../utils/logger/index.js';
@@ -106,8 +106,18 @@ export const updateAppointmentStatus = async (req, res) => {
  * @returns {Response}, response with code 200 No Content
  */
 export const deleteAppointmentById = async (req, res) => {
-  const appointment = await Appointment.findByPk(req.params.id);
+  const appointment = await Appointment.findByPk(req.params.id, {
+    include: [{ model: User, as: 'employee' }],
+  });
   await appointment.destroy();
+  const deleteEmail = formatEmail({
+    date: appointment.date,
+    time: appointment.start,
+    employee: appointment.employee,
+    option: 'cancellation',
+    emailLink: 'emailLink',
+  });
+  await publishMessage({ ...deleteEmail, receiver: req.session.user.email });
   res
     .status(200)
     .json({ success: true, message: 'Appointment successfully cancelled' });
