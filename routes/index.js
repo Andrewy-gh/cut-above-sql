@@ -13,6 +13,6 @@ router.use('/api/appointments', appointmentRoutes);
 router.use('/api/schedules', schedulesRoutes);
 router.use(authRoutes);
 router.use('/api/employees', employeeRoutes);
-router.use('/api/emails', emailRoutes);
+router.use('/api/email', emailRoutes);
 
 export default router;
