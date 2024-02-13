@@ -2,6 +2,8 @@ import { Appointment } from '../models/index.js';
 import { createNew, update } from '../services/appointmentService.js';
 import { formatDateAndTimes } from '../utils/dateTime.js';
 import logger from '../utils/logger/index.js';
+import { formatDateSlash, formatTime } from '../utils/dateTime.js';
+import { publishMessage } from '../services/emailService.js';
 
 /**
  * @description retrieve all appointments
@@ -27,10 +29,30 @@ export const getAllAppointments = async (req, res) => {
  * @method POST
  * @returns {Appointment | Error}, returns a valid Appointment object or Error
  */
+const formatAppt = (appointment) => ({
+  date: appointment.date,
+  start: appointment.start,
+  end: appointment.end,
+  service: appointment.service,
+  employeeId: appointment.employee.id,
+});
+const formatEmail = (appointment) => ({
+  date: formatDateSlash(appointment.date),
+  time: formatTime(appointment.time),
+  employee: appointment.employee.firstName,
+  option: appointment.option,
+  emailLink: 'emailLink',
+});
 export const bookAppointment = async (req, res) => {
+  const newAppt = formatAppt(req.body);
   await createNew({
-    ...req.body,
+    ...newAppt,
     clientId: req.session.user.id,
+  });
+  const newBookingEmail = formatEmail({ ...req.body, option: 'confirmation' });
+  await publishMessage({
+    ...newBookingEmail,
+    receiver: req.session.user.email,
   });
   res.status(200).json({
     success: true,
@@ -45,9 +67,15 @@ export const bookAppointment = async (req, res) => {
  * @returns {Appointment | Error}, returns a valid Appointment object or Error
  */
 export const modifyAppointment = async (req, res) => {
+  const modifiedAppointment = formatAppt(req.body);
   await update({
-    ...req.body,
+    ...modifiedAppointment,
     id: req.params.id,
+  });
+  const modifyEmail = formatEmail({ ...req.body, option: 'modification' });
+  await publishMessage({
+    ...modifyEmail,
+    receiver: req.session.user.email,
   });
   res.status(200).json({
     success: true,

@@ -34,13 +34,16 @@ export const sendEmail = async ({
     emailLink,
     contactDetails
   );
+  console.log('emailTemplate: ', emailTemplate);
 
   const fullEmailOptions = { ...senderReceiverOptions, ...emailTemplate };
 
   // Send Email
   try {
     const info = await transporter.sendMail(fullEmailOptions);
-    logger.info(info);
+    logger.info(`accepted ${info.accepted}`);
+    logger.error(`rejected ${info.rejected}`);
+    logger.info(`response: ${info.response}`);
   } catch (err) {
     logger.error(err);
   }
@@ -61,8 +64,7 @@ export const listenForMessage = async (lastId = '$') => {
 
   messages.forEach(async (message) => {
     logger.info(`Id: ${message[0]}. Data: ${message[1]}`);
-    const sentEmail = await sendEmail(JSON.parse(message[1][1]));
-    console.log(sentEmail);
+    await sendEmail(JSON.parse(message[1][1]));
   });
 
   // Pass the last id of the results to the next round.
