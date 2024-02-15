@@ -1,6 +1,7 @@
 import User from './user.js';
 import Appointment from './appointment.js';
 import Schedule from './schedule.js';
+import PasswordResetToken from './passwordResetToken.js';
 
 User.hasMany(Appointment, {
   foreignKey: 'clientId',
@@ -19,5 +20,6 @@ Appointment.belongsTo(Schedule, { foreignKey: 'scheduleId', as: 'schedule' });
 User.sync({ alter: true });
 Appointment.sync({ alter: true });
 Schedule.sync({ alter: true });
+PasswordResetToken.sync({ alter: true });
 
-export { User, Appointment, Schedule };
+export { User, Appointment, Schedule, PasswordResetToken };
