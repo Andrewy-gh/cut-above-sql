@@ -34,8 +34,8 @@ export const login = async (req, res) => {
  * @method GET
  * @returns {Session}
  */
-export const getAccount = async (req, res) => {
-  res.json(req.session);
+export const getCurrentUser = async (req, res) => {
+  res.json(req.session.user);
 };
 
 /**
