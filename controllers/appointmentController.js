@@ -16,6 +16,11 @@ export const getAllAppointments = async (req, res) => {
   res.json(appointments);
 };
 
+export const getSingleAppointment = async (req, res) => {
+  const appointment = await Appointment.findByPk(req.params.id);
+  res.json(appointment);
+};
+
 /**
  * @description book a new appointment
  * @params {
@@ -38,7 +43,7 @@ const formatAppt = (appointment) => ({
 });
 const formatEmail = (appointment) => ({
   date: formatDateSlash(appointment.date),
-  time: formatTime(appointment.time),
+  time: formatTime(appointment.start),
   employee: appointment.employee.firstName,
   option: appointment.option,
   emailLink: 'emailLink',

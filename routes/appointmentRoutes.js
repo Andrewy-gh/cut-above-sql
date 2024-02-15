@@ -2,6 +2,7 @@ import { Router } from 'express';
 import { celebrate, Segments } from 'celebrate';
 import {
   getAllAppointments,
+  getSingleAppointment,
   bookAppointment,
   modifyAppointment,
   updateAppointmentStatus,
@@ -46,6 +47,7 @@ router
 
 router
   .route('/:id')
+  .get(getSingleAppointment)
   .put(
     celebrate(
       {
