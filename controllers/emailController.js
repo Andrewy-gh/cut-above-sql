@@ -1,5 +1,6 @@
 import { publishMessage } from '../services/emailService.js';
-import { EMAIL_USER } from '../utils/config.js';
+import { CLIENT_URL, EMAIL_USER } from '../utils/config.js';
+import { generateTokenLink } from '../services/tokenService.js';
 
 /**
  * @description send a test email
@@ -36,5 +37,19 @@ export const handleNewMessage = async (req, res) => {
     success: true,
     message:
       'Message has been received. You can expect a response in a timely manner.',
+  });
+};
+
+export const sendPasswordReset = async (req, res) => {
+  const emailLink = await generateTokenLink(req.body.email);
+  await publishMessage({
+    receiver: req.body.email,
+    emailLink,
+    option: 'reset password',
+  });
+  res.status(200).json({
+    success: true,
+    message:
+      'If an user exists with this email, an email with reset instructions has been sent.',
   });
 };
