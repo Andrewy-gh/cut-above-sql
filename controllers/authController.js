@@ -1,5 +1,10 @@
 import logger from '../utils/logger/index.js';
-import { authenticateUser, registerUser } from '../services/authService.js';
+import {
+  authenticateUser,
+  registerUser,
+  resetPassword,
+  validateToken,
+} from '../services/authService.js';
 
 /**
  * @description register user
@@ -29,16 +34,6 @@ export const login = async (req, res) => {
 };
 
 /**
- * @description get account details from session
- * @route /account
- * @method GET
- * @returns {Session}
- */
-export const getCurrentUser = async (req, res) => {
-  res.json(req.session.user);
-};
-
-/**
  * @description login user
  * @route /login
  * @method POST
@@ -62,4 +57,24 @@ export const logout = async (req, res) => {
     secure: false, // if true: only transmit cookie over https, in prod, always activate this
   });
   res.status(204).end();
+};
+
+/**
+ * @description endpoint for token validation
+ * @route /validation/:id/:token
+ * @method GET
+ */
+export const handleTokenValidation = async (req, res) => {
+  await validateToken(req.params);
+  res.json({ success: true, message: 'Token is valid' });
+};
+
+/**
+ * @description reset password after token is validated
+ * @route /reset-pw/:id/:token
+ * @method PUT
+ */
+export const handlePasswordReset = async (req, res) => {
+  await resetPassword({ id: req.params.id, newPassword: req.body.newPassword });
+  res.status(200).json({ success: true, message: 'Password updated' });
 };

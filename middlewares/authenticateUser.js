@@ -5,6 +5,7 @@ export const authenticateUser = async (req, res, next) => {
     console.log('====================================');
     console.log('there is no session');
     console.log('====================================');
+    throw new ApiError(403, 'Forbidden: not authenticated');
   }
   if (!req.session.user) {
     console.log('====================================');

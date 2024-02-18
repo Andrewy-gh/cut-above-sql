@@ -1,6 +1,6 @@
 import { publishMessage } from '../services/emailService.js';
 import { CLIENT_URL, EMAIL_USER } from '../utils/config.js';
-import { generateTokenLink } from '../services/tokenService.js';
+import { generateTokenLink } from '../services/authService.js';
 
 /**
  * @description send a test email
