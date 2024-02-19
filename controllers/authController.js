@@ -7,6 +7,8 @@ import {
   validateToken,
   updatePassword,
 } from '../services/authService.js';
+import { findById } from '../services/userService.js';
+import { publishMessage } from '../services/emailService.js';
 
 /**
  * @description register user
@@ -107,6 +109,14 @@ export const handleTokenValidation = async (req, res) => {
  * @method PUT
  */
 export const handlePasswordReset = async (req, res) => {
-  await resetPassword({ id: req.params.id, password: req.body.password });
+  const user = await findById(req.params.id);
+  if (!user) {
+    throw new ApiError(400, 'Bad Request');
+  }
+  await resetPassword(user, req.body.password);
+  await publishMessage({
+    receiver: user.email,
+    option: 'reset password success',
+  });
   res.status(200).json({ success: true, message: 'Password updated' });
 };

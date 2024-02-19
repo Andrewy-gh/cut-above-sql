@@ -95,14 +95,10 @@ export const validateToken = async (user) => {
   return resetToken;
 };
 
-export const resetPassword = async (user) => {
-  const currentUser = await User.findByPk(user.id);
-  if (!currentUser) {
-    throw new ApiError(400, 'Bad Request');
-  }
-  const passwordHash = await bcrypt.hash(user.password, 10);
-  currentUser.passwordHash = passwordHash;
-  await currentUser.save();
+export const resetPassword = async (user, password) => {
+  const passwordHash = await bcrypt.hash(password, 10);
+  user.passwordHash = passwordHash;
+  await user.save();
   await deleteResetTokenById(user.id);
   return currentUser;
 };

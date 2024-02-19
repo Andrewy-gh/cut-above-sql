@@ -1,4 +1,4 @@
-import { CLIENT_URL } from './config.js';
+import { CLIENT_URL, EMAIL_USER } from './config.js';
 
 const options = (
   employee,
@@ -25,6 +25,10 @@ const options = (
     'reset password': {
       subject: 'Instructions to reset your password.',
       text: `Follow this link to change your password: ${emailLink}. Once clicked this link will be immediately disabled. You also only have one hour before this link becomes inactive.`,
+    },
+    'reset password success': {
+      subject: 'Password successfully changed.',
+      text: `Your password has successfully been changed. If this is incorrect please email ${EMAIL_USER} immediately so that we can take action.`,
     },
     'message auto reply': {
       subject: 'Your message has been received.',
