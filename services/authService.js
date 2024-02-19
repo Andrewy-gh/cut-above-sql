@@ -66,7 +66,7 @@ export const generateTokenLink = async (email) => {
     return;
   }
   await checkForExistingToken(user.id);
-  const token = crypto.randomBytes(64).toString('hex'); // Generate random token
+  const token = crypto.randomBytes(32).toString('hex'); // Generate random token
   await storeToken(user.id, token);
   const resetUrl = `${CLIENT_URL}/resetpw/${user.id}/${token}`;
   return resetUrl;
@@ -100,7 +100,7 @@ export const resetPassword = async (user) => {
   if (!currentUser) {
     throw new ApiError(400, 'Bad Request');
   }
-  const passwordHash = await bcrypt.hash(user.newPassword, 10);
+  const passwordHash = await bcrypt.hash(user.password, 10);
   currentUser.passwordHash = passwordHash;
   await currentUser.save();
   await deleteResetTokenById(user.id);

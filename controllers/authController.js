@@ -107,6 +107,6 @@ export const handleTokenValidation = async (req, res) => {
  * @method PUT
  */
 export const handlePasswordReset = async (req, res) => {
-  await resetPassword({ id: req.params.id, newPassword: req.body.newPassword });
+  await resetPassword({ id: req.params.id, password: req.body.password });
   res.status(200).json({ success: true, message: 'Password updated' });
 };

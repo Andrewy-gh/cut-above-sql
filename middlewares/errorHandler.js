@@ -16,7 +16,12 @@ const errorHandler = async (err, req, res, next) => {
         const {
           details: [errorDetails],
         } = error; // 'details' is a Map()
-        errorMessages.push(errorDetails.message);
+        // prevents regex pattern from being sent to client
+        if (errorDetails.path.includes('password')) {
+          errorMessages.push('Password does not meet requirements');
+        } else {
+          errorMessages.push(errorDetails.message);
+        }
       }
     }
     logger.error(errorMessages.join(', '));
