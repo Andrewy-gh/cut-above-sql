@@ -5,13 +5,12 @@ import { convertDate } from '../utils/dateTime.js';
 
 export const getPublicSchedules = async (req, res) => {
   return await Schedule.findAll({
-    attributes: { exclude: ['createdAt', 'updatedAt'] },
     include: [
       {
         model: Appointment,
         as: 'appointments',
         attributes: {
-          exclude: ['createdAt', 'updatedAt', 'clientId', 'scheduleId'],
+          exclude: ['clientId', 'scheduleId'],
         },
       },
     ],
@@ -20,26 +19,21 @@ export const getPublicSchedules = async (req, res) => {
 
 export const getPrivateSchedules = async (req, res) => {
   await Schedule.findAll({
-    attributes: { exclude: ['createdAt', 'updatedAt'] },
     include: [
       {
         model: Appointment,
         as: 'appointments',
         attributes: {
-          exclude: ['createdAt', 'updatedAt', 'scheduleId'],
+          exclude: ['scheduleId'],
         },
         include: [
           {
             model: User.scope('withoutPassword'),
             as: 'client',
-            // attributes: {
-            //   exclude: ['createdAt', 'updatedAt'],
-            // },
           },
           {
             model: User.scope('withoutPassword'),
             as: 'employee',
-            // attributes: { exclude: ['createdAt', 'updatedAt'] },
           },
         ],
       },

@@ -24,7 +24,7 @@ Schedule.init(
       allowNull: false,
     },
   },
-  { sequelize, underscored: true, modelName: 'schedule' }
+  { sequelize, timestamps: false, underscored: true, modelName: 'schedule' }
 );
 
 export default Schedule;

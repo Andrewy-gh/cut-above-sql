@@ -39,7 +39,7 @@ Appointment.init(
       defaultValue: 'scheduled',
     },
   },
-  { sequelize, underscored: true, modelName: 'appointment' }
+  { sequelize, timestamps: false, underscored: true, modelName: 'appointment' }
 );
 
 export default Appointment;
