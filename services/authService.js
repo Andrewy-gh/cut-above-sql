@@ -30,6 +30,24 @@ export const authenticateUser = async (credentials) => {
   };
 };
 
+export const updateEmail = async (user) => {
+  const currentUser = await User.findByPk(user.id);
+  currentUser.email = user.email;
+  await currentUser.save();
+  return {
+    id: currentUser.id,
+    email: currentUser.email,
+    firstName: currentUser.firstName,
+    lastName: currentUser.lastName,
+    role: currentUser.role,
+  };
+};
+
+export const updatePassword = async (user) => {
+  const passwordHash = await bcrypt.hash(user.password, 10);
+  await User.update({ passwordHash }, { where: { id: user.id } });
+};
+
 const storeToken = async (userId, token) => {
   const tokenHash = await bcrypt.hash(token, 10);
   return await PasswordResetToken.create({ userId, tokenHash });

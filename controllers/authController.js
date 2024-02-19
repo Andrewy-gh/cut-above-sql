@@ -2,15 +2,16 @@ import logger from '../utils/logger/index.js';
 import {
   authenticateUser,
   registerUser,
+  updateEmail,
   resetPassword,
   validateToken,
+  updatePassword,
 } from '../services/authService.js';
 
 /**
  * @description register user
  * @route /signup
  * @method POST
- * @returns {Response | Error} 204 for successful response
  */
 export const register = async (req, res) => {
   await registerUser(req.body);
@@ -23,7 +24,6 @@ export const register = async (req, res) => {
  * @description login user
  * @route /login
  * @method POST
- * @returns {Response | Error} 204 for successful response
  */
 export const login = async (req, res) => {
   const user = await authenticateUser(req.body);
@@ -34,10 +34,9 @@ export const login = async (req, res) => {
 };
 
 /**
- * @description login user
- * @route /login
+ * @description logout user
+ * @route /logout
  * @method POST
- * @returns {Response | Error} 204 for successful response
  */
 export const logout = async (req, res) => {
   const { user } = req.session;
@@ -57,6 +56,39 @@ export const logout = async (req, res) => {
     secure: false, // if true: only transmit cookie over https, in prod, always activate this
   });
   res.status(204).end();
+};
+
+/**
+ * @description change email
+ * @route /email
+ * @method PUT
+ */
+export const changeEmail = async (req, res) => {
+  const user = await updateEmail({
+    email: req.body.email,
+    id: req.session.user.id,
+  });
+  req.session.user = user;
+  res.status(200).json({
+    success: true,
+    message: 'User email successfully changed',
+    user: user,
+  });
+};
+
+/**
+ * @description change password
+ * @route /password
+ * @method PUT
+ */
+export const changePassword = async (req, res) => {
+  await updatePassword({
+    password: req.body.password,
+    id: req.session.user.id,
+  });
+  res
+    .status(200)
+    .json({ success: true, message: 'User password successfully changed' });
 };
 
 /**
