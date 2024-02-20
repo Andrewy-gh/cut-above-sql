@@ -1,4 +1,4 @@
-import { Appointment, Schedule } from '../models/index.js';
+import { Appointment, Schedule, User } from '../models/index.js';
 import { checkAvailability } from '../utils/dateTime.js';
 import ApiError from '../utils/ApiError.js';
 import { convertDate } from '../utils/dateTime.js';
@@ -18,22 +18,43 @@ export const getPublicSchedules = async (req, res) => {
 };
 
 export const getPrivateSchedules = async (req, res) => {
-  await Schedule.findAll({
+  return await Schedule.findAll({
     include: [
       {
         model: Appointment,
         as: 'appointments',
         attributes: {
-          exclude: ['scheduleId'],
+          exclude: ['scheduleId', 'clientId', 'employeeId'],
         },
         include: [
           {
             model: User.scope('withoutPassword'),
             as: 'client',
+
+            attributes: {
+              exclude: [
+                'passwordHash',
+                'image',
+                'profile',
+                'lastName',
+                'role',
+                'email',
+              ],
+            },
           },
           {
             model: User.scope('withoutPassword'),
             as: 'employee',
+            attributes: {
+              exclude: [
+                'passwordHash',
+                'image',
+                'profile',
+                'lastName',
+                'role',
+                'email',
+              ],
+            },
           },
         ],
       },

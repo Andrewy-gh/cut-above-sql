@@ -50,10 +50,17 @@ router
   .get(celebrate({ [Segments.PARAMS]: tokenUrlSchema }), handleTokenValidation);
 
 router.route('/reset-pw/:id/:token').put(
-  celebrate({
-    [Segments.PARAMS]: tokenUrlSchema,
-    [Segments.BODY]: passwordSchema,
-  }),
+  celebrate(
+    {
+      [Segments.PARAMS]: tokenUrlSchema,
+      [Segments.BODY]: passwordSchema,
+    },
+    {
+      abortEarly: false,
+      warnings: true,
+    },
+    { mode: 'full' }
+  ),
   validateToken,
   handlePasswordReset
 );

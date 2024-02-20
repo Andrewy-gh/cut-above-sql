@@ -10,7 +10,11 @@ import {
   deleteAppointmentById,
   testBookingAppontment,
 } from '../controllers/appointmentController.js';
-import { bodySchema, paramsSchema, statusSchema } from '../schemas/index.js';
+import {
+  bookingSchema,
+  idSchema,
+  statusSchema,
+} from '../schemas/appointmentSchema.js';
 import {
   authenticateUser,
   authenticateRole,
@@ -20,12 +24,10 @@ const router = Router();
 
 router
   .route('/')
-  .get(getAllAppointments)
+  .get(authenticateUser, getAllAppointments)
   .post(
     celebrate(
-      {
-        [Segments.BODY]: bodySchema,
-      }
+      { [Segments.BODY]: bookingSchema }
       // https://github.com/arb/celebrate#celebrateschema-joioptions-opts
       // https://github.com/hapijs/joi/blob/master/API.md#anyvalidatevalue-options
       // https://joi.dev/api/?v=17.12.0#date
@@ -36,24 +38,26 @@ router
     bookAppointment
   );
 
-router
-  .route('/status/:id')
-  .put(
-    celebrate({ [Segments.BODY]: statusSchema }),
-    authenticateUser,
-    authenticateRole,
-    updateAppointmentStatus
-  );
+router.route('/status/:id').put(
+  celebrate(
+    { [Segments.PARAMS]: idSchema, [Segments.BODY]: statusSchema },
+    {
+      abortEarly: false,
+      warnings: true,
+    },
+    { mode: 'full' }
+  ),
+  authenticateUser,
+  authenticateRole,
+  updateAppointmentStatus
+);
 
 router
   .route('/:id')
-  .get(getSingleAppointment)
+  .get(celebrate({ [Segments.PARAMS]: idSchema }), getSingleAppointment)
   .put(
     celebrate(
-      {
-        [Segments.BODY]: bodySchema,
-        [Segments.PARAMS]: paramsSchema,
-      },
+      { [Segments.PARAMS]: idSchema, [Segments.BODY]: bookingSchema },
       {
         abortEarly: false,
         warnings: true,
@@ -66,7 +70,7 @@ router
     modifyAppointment
   )
   .delete(
-    celebrate({ [Segments.PARAMS]: paramsSchema }),
+    celebrate({ [Segments.PARAMS]: idSchema }),
     authenticateUser,
     deleteAppointmentById
   );

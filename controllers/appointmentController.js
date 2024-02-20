@@ -1,5 +1,9 @@
 import { Appointment, User } from '../models/index.js';
-import { createNew, update } from '../services/appointmentService.js';
+import {
+  createNew,
+  getAppointmentsByRole,
+  update,
+} from '../services/appointmentService.js';
 import { formatDateAndTimes } from '../utils/dateTime.js';
 import logger from '../utils/logger/index.js';
 import { formatDateSlash, formatTime } from '../utils/dateTime.js';
@@ -12,7 +16,8 @@ import { publishMessage } from '../services/emailService.js';
  * @returns {Appointment[]}, array of Appointment objects
  */
 export const getAllAppointments = async (req, res) => {
-  const appointments = await Appointment.findAll();
+  const user = await User.findByPk(req.session.user.id);
+  const appointments = await getAppointmentsByRole(user);
   res.json(appointments);
 };
 
