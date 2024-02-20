@@ -31,7 +31,7 @@ router
 router
   .route('/email')
   .put(
-    celebrate({ [Segments.BODY]: signupSchema }),
+    celebrate({ [Segments.BODY]: emailSchema }),
     authenticateUser,
     changeEmail
   );

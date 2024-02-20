@@ -100,7 +100,6 @@ export const resetPassword = async (user, password) => {
   user.passwordHash = passwordHash;
   await user.save();
   await deleteResetTokenById(user.id);
-  return currentUser;
 };
 
 const deleteResetTokenById = async (id) => {
