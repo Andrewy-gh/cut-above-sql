@@ -14,6 +14,7 @@ import validateToken from '../middlewares/validateToken.js';
 import {
   loginSchema,
   signupSchema,
+  emailSchema,
   passwordSchema,
   tokenUrlSchema,
 } from '../schemas/authSchema.js';
