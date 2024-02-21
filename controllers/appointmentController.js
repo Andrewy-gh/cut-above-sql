@@ -8,6 +8,7 @@ import { formatDateAndTimes } from '../utils/dateTime.js';
 import logger from '../utils/logger/index.js';
 import { formatDateSlash, formatTime } from '../utils/dateTime.js';
 import { publishMessage } from '../services/emailService.js';
+import { generateAppointmentLink } from '../utils/emailOptions.js';
 
 /**
  * @description retrieve all appointments
@@ -51,15 +52,19 @@ const formatEmail = (appointment) => ({
   time: formatTime(appointment.start),
   employee: appointment.employee.firstName,
   option: appointment.option,
-  emailLink: 'emailLink',
+  emailLink: generateAppointmentLink(appointment.id),
 });
 export const bookAppointment = async (req, res) => {
-  const newAppt = formatAppt(req.body);
-  await createNew({
-    ...newAppt,
+  const appointment = formatAppt(req.body);
+  const newAppointment = await createNew({
+    ...appointment,
     clientId: req.session.user.id,
   });
-  const newBookingEmail = formatEmail({ ...req.body, option: 'confirmation' });
+  const newBookingEmail = formatEmail({
+    ...req.body,
+    id: newAppointment.id,
+    option: 'confirmation',
+  });
   await publishMessage({
     ...newBookingEmail,
     receiver: req.session.user.email,

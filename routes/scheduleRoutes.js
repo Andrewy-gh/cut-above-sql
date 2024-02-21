@@ -19,6 +19,7 @@ router
   .route('/')
   .get(getAllSchedulesPublic)
   .post(authenticateUser, authenticateRole, createNewSchedule);
+
 router.route('/:id').delete(
   celebrate({
     [Segments.PARAMS]: paramsSchema,

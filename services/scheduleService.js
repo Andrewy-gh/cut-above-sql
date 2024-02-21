@@ -3,7 +3,7 @@ import { checkAvailability } from '../utils/dateTime.js';
 import ApiError from '../utils/ApiError.js';
 import { convertDate } from '../utils/dateTime.js';
 
-export const getPublicSchedules = async (req, res) => {
+export const getPublicSchedules = async () => {
   return await Schedule.findAll({
     include: [
       {
@@ -12,12 +12,28 @@ export const getPublicSchedules = async (req, res) => {
         attributes: {
           exclude: ['clientId', 'scheduleId'],
         },
+        include: [
+          {
+            model: User.scope('withoutPassword'),
+            as: 'employee',
+            attributes: {
+              exclude: [
+                'passwordHash',
+                'image',
+                'profile',
+                'lastName',
+                'role',
+                'email',
+              ],
+            },
+          },
+        ],
       },
     ],
   });
 };
 
-export const getPrivateSchedules = async (req, res) => {
+export const getPrivateSchedules = async () => {
   return await Schedule.findAll({
     include: [
       {

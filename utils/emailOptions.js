@@ -1,6 +1,11 @@
 import { CLIENT_URL, EMAIL_USER } from './config.js';
 
-const options = (
+export const generateAppointmentLink = (id) =>
+  `${CLIENT_URL}/appointment/${id}`;
+
+export const generateResetLink = (id, token) => `${CLIENT_URL}/${id}/${token}`;
+
+export const options = (
   employee,
   date,
   time,
@@ -50,5 +55,3 @@ const options = (
     throw new Error(`Invalid template option type`);
   }
 };
-
-export default options;

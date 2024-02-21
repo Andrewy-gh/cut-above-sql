@@ -2,7 +2,7 @@ import logger from '../utils/logger/index.js';
 import nodemailer from 'nodemailer';
 import { pub, sub } from '../utils/redis.js';
 import { EMAIL_SERVICE, EMAIL_USER, EMAIL_PASSWORD } from '../utils/config.js';
-import options from '../utils/emailOptions.js';
+import { options } from '../utils/emailOptions.js';
 
 export const sendEmail = async ({
   receiver,
