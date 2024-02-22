@@ -35,6 +35,16 @@ export const getAppointmentsByRole = async (user) => {
         {
           model: User.scope('withoutPassword'),
           as: 'client',
+          attributes: {
+            exclude: [
+              'passwordHash',
+              'image',
+              'profile',
+              'lastName',
+              'role',
+              'email',
+            ],
+          },
         },
       ],
     });
