@@ -76,3 +76,24 @@ export const update = async (newAppt) => {
     return appointment;
   }
 };
+
+export const getClientAppointmentById = async (id) => {
+  return await Appointment.findByPk(id, {
+    include: [
+      {
+        model: User,
+        as: 'employee',
+        attributes: {
+          exclude: [
+            'passwordHash',
+            'image',
+            'profile',
+            'lastName',
+            'role',
+            'email',
+          ],
+        },
+      },
+    ],
+  });
+};

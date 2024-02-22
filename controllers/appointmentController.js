@@ -3,6 +3,7 @@ import {
   createNew,
   getAppointmentsByRole,
   update,
+  getClientAppointmentById,
 } from '../services/appointmentService.js';
 import { formatDateAndTimes } from '../utils/dateTime.js';
 import logger from '../utils/logger/index.js';
@@ -22,8 +23,13 @@ export const getAllAppointments = async (req, res) => {
   res.json(appointments);
 };
 
+/**
+ * @description retrieve all appointments
+ * @route /api/appointments/:id
+ * @method GET
+ */
 export const getSingleAppointment = async (req, res) => {
-  const appointment = await Appointment.findByPk(req.params.id);
+  const appointment = await getClientAppointmentById(req.params.id);
   res.json(appointment);
 };
 
@@ -65,10 +71,13 @@ export const bookAppointment = async (req, res) => {
     id: newAppointment.id,
     option: 'confirmation',
   });
-  await publishMessage({
-    ...newBookingEmail,
-    receiver: req.session.user.email,
-  });
+  console.log('====================================');
+  console.log('newBookingEmail', newBookingEmail);
+  console.log('====================================');
+  // await publishMessage({
+  //   ...newBookingEmail,
+  //   receiver: req.session.user.email,
+  // });
   res.status(200).json({
     success: true,
     message: 'Appointment successfully updated',

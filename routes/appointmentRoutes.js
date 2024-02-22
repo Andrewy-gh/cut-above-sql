@@ -54,7 +54,11 @@ router.route('/status/:id').put(
 
 router
   .route('/:id')
-  .get(celebrate({ [Segments.PARAMS]: idSchema }), getSingleAppointment)
+  .get(
+    celebrate({ [Segments.PARAMS]: idSchema }),
+    authenticateUser,
+    getSingleAppointment
+  )
   .put(
     celebrate(
       { [Segments.PARAMS]: idSchema, [Segments.BODY]: bookingSchema },
