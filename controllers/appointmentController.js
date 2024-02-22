@@ -10,6 +10,7 @@ import logger from '../utils/logger/index.js';
 import { formatDateSlash, formatTime } from '../utils/dateTime.js';
 import { publishMessage } from '../services/emailService.js';
 import { generateAppointmentLink } from '../utils/emailOptions.js';
+import { formatAppt, formatEmail } from '../utils/formatters.js';
 
 /**
  * @description retrieve all appointments
@@ -46,20 +47,6 @@ export const getSingleAppointment = async (req, res) => {
  * @method POST
  * @returns {Appointment | Error}, returns a valid Appointment object or Error
  */
-const formatAppt = (appointment) => ({
-  date: appointment.date,
-  start: appointment.start,
-  end: appointment.end,
-  service: appointment.service,
-  employeeId: appointment.employee.id,
-});
-const formatEmail = (appointment) => ({
-  date: formatDateSlash(appointment.date),
-  time: formatTime(appointment.start),
-  employee: appointment.employee.firstName,
-  option: appointment.option,
-  emailLink: generateAppointmentLink(appointment.id),
-});
 export const bookAppointment = async (req, res) => {
   const appointment = formatAppt(req.body);
   const newAppointment = await createNew({
@@ -71,13 +58,10 @@ export const bookAppointment = async (req, res) => {
     id: newAppointment.id,
     option: 'confirmation',
   });
-  console.log('====================================');
-  console.log('newBookingEmail', newBookingEmail);
-  console.log('====================================');
-  // await publishMessage({
-  //   ...newBookingEmail,
-  //   receiver: req.session.user.email,
-  // });
+  await publishMessage({
+    ...newBookingEmail,
+    receiver: req.session.user.email,
+  });
   res.status(200).json({
     success: true,
     message: 'Appointment successfully updated',
@@ -91,12 +75,16 @@ export const bookAppointment = async (req, res) => {
  * @returns {Appointment | Error}, returns a valid Appointment object or Error
  */
 export const modifyAppointment = async (req, res) => {
-  const modifiedAppointment = formatAppt(req.body);
-  await update({
-    ...modifiedAppointment,
+  const appointment = formatAppt(req.body);
+  const modifiedAppointment = await update({
+    ...appointment,
     id: req.params.id,
   });
-  const modifyEmail = formatEmail({ ...req.body, option: 'modification' });
+  const modifyEmail = formatEmail({
+    ...req.body,
+    id: modifiedAppointment.id,
+    option: 'modification',
+  });
   await publishMessage({
     ...modifyEmail,
     receiver: req.session.user.email,
@@ -139,7 +127,6 @@ export const deleteAppointmentById = async (req, res) => {
     time: appointment.start,
     employee: appointment.employee,
     option: 'cancellation',
-    emailLink: 'emailLink',
   });
   await publishMessage({ ...deleteEmail, receiver: req.session.user.email });
   res

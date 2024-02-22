@@ -66,6 +66,7 @@ export const update = async (newAppt) => {
         scheduleId: availbleScheduleId,
       });
       await appointment.save();
+      return appointment;
     });
     return result;
   } else {
