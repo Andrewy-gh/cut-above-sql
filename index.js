@@ -23,7 +23,7 @@ app.use(cors);
 
 app.use(session);
 
-// cronJob();
+cronJob();
 listenForMessage();
 
 // routes

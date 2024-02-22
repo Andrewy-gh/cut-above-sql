@@ -12,6 +12,7 @@ export const seedData = async () => {
 export const seedTokens = async () => {
   const tokens = Array.from({ length: 10 }, () => ({
     tokenHash: crypto.randomBytes(32).toString('hex'),
+    expiresAt: '2024-02-23T13:47:32.126Z',
   }));
   const newTokens = await PasswordResetToken.bulkCreate(tokens);
   logger.info('new tokens created');

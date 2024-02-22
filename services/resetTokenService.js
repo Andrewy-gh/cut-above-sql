@@ -5,7 +5,7 @@ export const deleteExpiredTokens = async () => {
   return await PasswordResetToken.destroy({
     where: {
       expiresAt: {
-        [Op.gt]: new Date().toISOString(),
+        [Op.lt]: new Date(),
       },
     },
   });
