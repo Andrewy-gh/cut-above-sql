@@ -1,5 +1,6 @@
+import crypto from 'crypto';
 import { users, appointments } from './data.js';
-import { Appointment, User } from '../models/index.js';
+import { Appointment, PasswordResetToken, User } from '../models/index.js';
 import logger from './logger/index.js';
 
 export const seedData = async () => {
@@ -8,4 +9,13 @@ export const seedData = async () => {
   logger.info(JSON.stringify(newUsers));
 };
 
-seedData();
+export const seedTokens = async () => {
+  const tokens = Array.from({ length: 10 }, () => ({
+    tokenHash: crypto.randomBytes(32).toString('hex'),
+  }));
+  const newTokens = await PasswordResetToken.bulkCreate(tokens);
+  logger.info('new tokens created');
+  logger.info(JSON.stringify(newTokens));
+};
+
+seedTokens();
