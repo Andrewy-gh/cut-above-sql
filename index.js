@@ -10,6 +10,7 @@ import logger from './utils/logger/index.js';
 import session from './middlewares/session.js';
 import cors from './middlewares/cors.js';
 import cronJob from './utils/cronJob.js';
+import limiter from './middlewares/limiter.js';
 import { listenForMessage } from './services/emailService.js';
 
 const app = express();
@@ -22,6 +23,7 @@ app.options('*', cors);
 app.use(cors);
 
 app.use(session);
+app.use(limiter);
 
 cronJob();
 listenForMessage();
