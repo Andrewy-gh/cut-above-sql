@@ -6,9 +6,7 @@ import {
   bookAppointment,
   modifyAppointment,
   updateAppointmentStatus,
-  testAppointmentUpdate,
   deleteAppointmentById,
-  testBookingAppontment,
 } from '../controllers/appointmentController.js';
 import {
   bookingSchema,
@@ -78,9 +76,5 @@ router
     authenticateUser,
     deleteAppointmentById
   );
-
-// test routes
-router.route('/test').post(testBookingAppontment);
-router.route('/:id/test').get(testAppointmentUpdate);
 
 export default router;
