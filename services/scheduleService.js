@@ -1,7 +1,6 @@
 import { Appointment, Schedule, User } from '../models/index.js';
 import { checkAvailability } from '../utils/dateTime.js';
 import ApiError from '../utils/ApiError.js';
-import { convertDate } from '../utils/dateTime.js';
 
 export const getPublicSchedules = async () => {
   return await Schedule.findAll({
@@ -79,11 +78,6 @@ export const getPrivateSchedules = async () => {
 };
 
 export const checkScheduleAvailability = async (newAppt) => {
-  // ! Prev
-  // must convert from dayjs obj to iso string for query
-  // const date = convertDate(newAppt.date).toISOString();
-  // const schedule = await Schedule.findOne({ where: { date } });
-  // ! New newAppt.date is already ISO String
   const schedule = await Schedule.findOne({ where: { date: newAppt.date } });
   if (!schedule) {
     throw new ApiError(410, 'Schedule not available');
