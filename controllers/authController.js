@@ -7,7 +7,7 @@ import {
   validateToken,
   updatePassword,
 } from '../services/authService.js';
-import { findById } from '../services/userService.js';
+import { User } from '../models/index.js';
 import { publishMessage } from '../services/emailService.js';
 
 /**
@@ -109,7 +109,7 @@ export const handleTokenValidation = async (req, res) => {
  * @method PUT
  */
 export const handlePasswordReset = async (req, res) => {
-  const user = await findById(req.params.id);
+  const user = await User.findByPk(req.params.id);
   if (!user) {
     throw new ApiError(400, 'Bad Request');
   }

@@ -1,25 +1,13 @@
 import { Router } from 'express';
-import { celebrate, Segments } from 'celebrate';
+import { getAllUsers } from '../controllers/userController.js';
 import {
-  getAllUsers,
-  getAppointments,
-  getAppointmentsById,
-  createNewUser,
-} from '../controllers/userController.js';
-import { paramsSchema } from '../schemas/index.js';
+  authenticateUser,
+  authenticateRole,
+} from '../middlewares/authenticateUser.js';
 
 const router = Router();
 
-router.route('/').get(getAllUsers).post(createNewUser);
-
-router.route('/:id/appointments').get(
-  celebrate({
-    [Segments.PARAMS]: paramsSchema,
-  }),
-  getAppointmentsById
-);
-
-// test routes
-router.route('/:id').get(getAppointments);
+// ! TODO
+router.route('/').get(authenticateUser, authenticateRole, getAllUsers);
 
 export default router;
