@@ -11,6 +11,9 @@ const limiter = rateLimit({
     // @ts-expect-error - Known issue: the `call` function is not present in @types/ioredis
     sendCommand: (...args) => redisClient.call(...args),
   }),
+  validate: {
+    xForwardedForHeader: false, // Disable the X-Forwarded-For check
+  },
 });
 
 export default limiter;

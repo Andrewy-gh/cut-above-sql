@@ -34,7 +34,6 @@ export const sendEmail = async ({
     emailLink,
     contactDetails
   );
-  console.log('emailTemplate: ', emailTemplate);
 
   const fullEmailOptions = { ...senderReceiverOptions, ...emailTemplate };
 

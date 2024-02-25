@@ -10,7 +10,7 @@ export const getPublicSchedules = async () => {
         model: Appointment,
         as: 'appointments',
         attributes: {
-          exclude: ['clientId', 'scheduleId'],
+          exclude: ['clientId', 'scheduleId', 'employeeId'],
         },
         include: [
           {

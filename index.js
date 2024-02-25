@@ -1,4 +1,6 @@
 import express from 'express';
+import { fileURLToPath } from 'url';
+import path from 'path';
 import helmet from 'helmet';
 import bodyParser from 'body-parser';
 import 'express-async-errors';
@@ -11,12 +13,17 @@ import session from './middlewares/session.js';
 import cors from './middlewares/cors.js';
 import cronJob from './utils/cronJob.js';
 import limiter from './middlewares/limiter.js';
+import setCSPHeader from './middlewares/contentSecurity.js';
 import { listenForMessage } from './services/emailService.js';
 
 const app = express();
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 app.use(helmet());
+app.use(setCSPHeader);
 app.use(bodyParser.json());
+app.use(express.static('dist'));
 
 // setup CORS logic
 app.options('*', cors);
@@ -33,6 +40,9 @@ app.use(router);
 
 // error handler middleware
 app.use(errorHandler);
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'dist', 'index.html'));
+});
 
 const start = async () => {
   await connectToDatabase();
