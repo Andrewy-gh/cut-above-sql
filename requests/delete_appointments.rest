@@ -1,7 +1,0 @@
-###
-DELETE http://localhost:3001/api/appointments/c0bf5f66-a6f5-4e8b-b18a-218bdd10dfc0
-Origin: http://localhost:3001
-
-###
-DELETE http://localhost:3001/api/appointments/5872a06a-c768-42a8-84e3-799b30104292
-Origin: http://localhost:3001
