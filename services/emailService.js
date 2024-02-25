@@ -74,7 +74,7 @@ export const publishMessage = async (obj) => {
   await pub.xadd(
     'email-stream',
     'MAXLEN',
-    '3',
+    '100',
     '*',
     'data',
     JSON.stringify(obj)
