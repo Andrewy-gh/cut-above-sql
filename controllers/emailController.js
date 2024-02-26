@@ -1,17 +1,6 @@
 import { publishMessage } from '../services/emailService.js';
-import { CLIENT_URL, EMAIL_USER } from '../utils/config.js';
+import { EMAIL_USER } from '../utils/config.js';
 import { generateTokenLink } from '../services/authService.js';
-
-/**
- * @description send a test email
- * @route /api/email
- * @method POST
- * @returns {Response}
- */
-export const sendEmail = async (req, res) => {
-  await publishMessage(req.body);
-  res.json({ success: true, message: 'email sent' });
-};
 
 /**
  * @description send an email to acknowledge message received

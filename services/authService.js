@@ -1,7 +1,7 @@
 import crypto from 'crypto';
-import { CLIENT_URL } from '../utils/config.js';
 import bcrypt from 'bcrypt';
 import { User, PasswordResetToken } from '../models/index.js';
+import { generateResetLink } from '../utils/emailOptions.js';
 import ApiError from '../utils/ApiError.js';
 
 export const registerUser = async (credentials) => {
@@ -68,7 +68,7 @@ export const generateTokenLink = async (email) => {
   await checkForExistingToken(user.id);
   const token = crypto.randomBytes(32).toString('hex'); // Generate random token
   await storeToken(user.id, token);
-  const resetUrl = `${CLIENT_URL}/resetpw/${user.id}/${token}`;
+  const resetUrl = generateResetLink(user.id, token);
   return resetUrl;
 };
 
