@@ -1,3 +1,5 @@
+import Joi from 'joi';
+
 const firstName = Joi.string().allow('');
 
 const lastName = Joi.string().allow('');
@@ -11,11 +13,13 @@ const email = Joi.string()
 
 const message = Joi.string().allow('');
 
-export const newMessageSchema = Joi.object({
-  firstName,
-  lastName,
-  email,
-  message,
+export const newMessageSchema = Joi.object().keys({
+  contactDetails: Joi.object().keys({
+    firstName,
+    lastName,
+    email,
+    message,
+  }),
 });
 
 export const passwordResetSchema = Joi.object({ email });
