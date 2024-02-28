@@ -1,6 +1,11 @@
 # Cut Above SQL
 
 Server side application for the Cut Above Barbershop using a Postgres Database and Sequelize ORM. Schema validating through Joi and Celebrate libraries.
+Full stack repo [here](https://github.com/Andrewy-gh/cut-above-barbershop)
+
+**Link to project:** https://cutabove.fly.dev
+
+![alt tag](https://github.com/Andrewyithub/cut-above-barbershop/assets/17731837/35958cd0-07e1-44e3-a0b3-2be928c285a6)
 
 ## How It's Made:
 
