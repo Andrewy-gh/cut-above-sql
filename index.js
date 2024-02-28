@@ -25,14 +25,22 @@ app.use(setCSPHeader);
 app.use(bodyParser.json());
 app.use(express.static('dist'));
 
+app.set('trust proxy', 1);
+
 // setup CORS logic
 app.options('*', cors);
 app.use(cors);
 
+// session config
 app.use(session);
+
+// rate limiter middleware
 app.use(limiter);
 
+// automatic cron job
 cronJob();
+
+// pub/sub message listener
 listenForMessage();
 
 // routes

@@ -13,7 +13,8 @@ const sessionConfig = {
   saveUninitialized: false,
   name: 'cutabove',
   cookie: {
-    secure: process.env.NODE_ENV === 'production',
+    domain: 'cutabove.fly.dev',
+    secure: true,
     httpOnly: true, // if true: prevents client side JS from reading the cookie
     maxAge: 1000 * 60 * 60, // session max age in milliseconds, currently 60 minutes
     // explicitly set cookie to lax
